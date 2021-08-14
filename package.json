@@ -1,6 +1,6 @@
 {
     "name": "@mue-js/react",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
     "main": "src/index.js",
     "exports": {
@@ -32,6 +32,7 @@
         "uuid": "^8.3.2"
     },
     "publishConfig": {
+        "access": "public",
         "registry": "https://registry.yarnpkg.com"
     },
     "peerDependencies": {
