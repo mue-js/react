@@ -12,14 +12,14 @@ interface Step {
     }
 }
 
-export type BreacrumbProps = WithChildren<{
+export interface BreacrumbProps extends WithChildren {
     history: object
     className?: string
     steps: Step[]
     step: string
     url?: string
     noLinkAfterId?: string | number
-}>
+}
 
 function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps) {
     const entries = steps instanceof Object && Object.entries(steps)

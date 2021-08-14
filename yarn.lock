@@ -967,6 +967,11 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
+"@mue-js/sass@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@mue-js/sass/-/sass-1.0.0.tgz#894f8751c7aef73c037a070c5b71a25f690d93b2"
+  integrity sha512-4OZvYzjUG1vqPKMvaLEcF46fj45kNRE3uB0oZXVTSU4EQ/mdpNzNk0dEqekmtsWvuk0Kkr5RX5waj8J0wSqb4w==
+
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.2":
   version "2.1.8-no-fsevents.2"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.2.tgz#e324c0a247a5567192dd7180647709d7e2faf94b"
@@ -3367,11 +3372,6 @@ ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
-
-muejs@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/muejs/-/muejs-3.0.2.tgz#6e9128cbdd177034f53d9c866bba828b87e1f66d"
-  integrity sha512-48QKhtGp/zGp0YJ5+kbScrPIfW/eryy6XBuGM2nCNuuu+3xzAYjjlJvW2FAfMNMLbb1lvZK8Imibs7LGzXkctA==
 
 multicast-dns-service-types@^1.1.0:
   version "1.1.0"

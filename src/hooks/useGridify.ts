@@ -1,7 +1,39 @@
 import { camelToKebab } from '../utils/stringFormat'
 import { getCSSVarForDimension } from '../utils/gridify'
 
-export const useGridify = ({
+export type ResponsiveType = {
+    xs: string | number
+    sm: string | number
+    md: string | number
+    lg: string | number
+    xl: string | number
+    xxl: string | number
+}
+
+export type ResponsiveOrValue = string | number | ResponsiveType
+
+export interface GridifyProps {
+    col?: ResponsiveOrValue
+    row?: ResponsiveOrValue
+    width?: ResponsiveOrValue
+    height?: ResponsiveOrValue
+    fullWidth?: boolean
+    fullHeight?: boolean
+
+    className?: string
+    style?: object
+    position?: string
+    justify?: string
+    align?: string
+
+    show?: boolean
+    hide?: boolean
+
+    shouldTransmitProps?: boolean
+    componentName?: string
+}
+
+function useGridify({
     col: defaultCol,
     row: defaultRow,
     width = 1,
@@ -20,7 +52,7 @@ export const useGridify = ({
 
     shouldTransmitProps,
     componentName,
-}) => {
+}: GridifyProps) {
     const col = position === 'fixed' ? 0 : defaultCol
     const row = position === 'fixed' ? 0 : defaultRow
 
@@ -28,10 +60,15 @@ export const useGridify = ({
 
     // css variables
     const styles = {}
-    if (parseInt(width, 10) <= 0 && parseInt(height, 10) <= 0) {
+    if (
+        !(width instanceof Object) &&
+        parseInt(`${width}`, 10) <= 0 &&
+        !(height instanceof Object) &&
+        parseInt(`${height}`, 10) <= 0
+    ) {
         styles['display'] = 'none'
     } else {
-        ;['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'].forEach(size => {
+        ;['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'].forEach((size) => {
             const suffix = size !== 'xs' ? `-${size}` : ''
 
             styles[`--col${suffix}`] = getCSSVarForDimension({
@@ -48,20 +85,18 @@ export const useGridify = ({
                 dimension: fullWidth ? -1 : width,
                 size,
                 defaultValue: 1,
-                getPrefix: wdth => wdth >= 0 && 'span ',
+                getPrefix: (wdth) => wdth >= 0 && 'span ',
             })
             styles[`--height${suffix}`] = getCSSVarForDimension({
                 dimension: fullHeight ? -1 : height,
                 size,
                 defaultValue: 1,
-                getPrefix: hght => hght >= 0 && 'span ',
+                getPrefix: (hght) => hght >= 0 && 'span ',
             })
         })
     }
 
-    const gridElementProps = shouldTransmitProps
-        ? { col, row, width, height }
-        : {}
+    const gridElementProps = shouldTransmitProps ? { col, row, width, height } : {}
 
     return {
         hide: !(show ?? true) || hide,
@@ -73,7 +108,7 @@ export const useGridify = ({
             align && `align-${align}`,
             position,
         ]
-            .filter(e => !!e)
+            .filter((e) => !!e)
             .join(' '),
         style: { ...styles, ...style },
         ...gridElementProps,

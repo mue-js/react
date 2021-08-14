@@ -1,5 +1,5 @@
 {
-    "name": "@muejs/react",
+    "name": "@mue-js/react",
     "version": "1.0.0",
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
     "main": "src/index.js",
@@ -8,8 +8,8 @@
         "url": "https://github.com/Cobelt/muejs.git"
     },
     "dependencies": {
+        "@mue-js/sass": "^1.0.0",
         "lodash.memoize": "^4.1.2",
-        "muejs": "^3.0.2",
         "uuid": "^8.3.2"
     },
     "publishConfig": {
