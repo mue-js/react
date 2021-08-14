@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-import type { WithChildren } from '../../types'
+import type { History, WithChildren } from '../../types'
 
-import { Link } from '../Link'
+import Link from '../Link'
 
 import './index.scss'
 
@@ -13,7 +13,7 @@ interface Step {
 }
 
 export interface BreacrumbProps extends WithChildren {
-    history: object
+    history: History
     className?: string
     steps: Step[]
     step: string
@@ -39,7 +39,7 @@ function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps
         percent += percentPerStep * (parseInt(currentId, 10) - 1)
     }
 
-    let Tag: FC | 'div' = url ? Link : 'div'
+    let Tag = url ? Link : 'div'
 
     return (
         <>
@@ -85,7 +85,7 @@ function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps
                                 </Tag>
                             )
                         })
-                        ?.filter((e) => !!e)}
+                        ?.filter(Boolean)}
                 </div>
             </div>
         </>

@@ -55,14 +55,8 @@
         var(--sub-bg, transparent) 50%,
         var(--bg, var(--primary-color)) 50%
     );
-    background-position: var(
-        --btn-bg-position,
-        0% calc(100% + var(--border-size, 2px))
-    );
-    background-size: var(
-        --btn-bg-size,
-        100% calc(200% + 3 * var(--border-size, 2px))
-    );
+    background-position: var(--btn-bg-position, 0% calc(100% + var(--border-size, 2px)));
+    background-size: var(--btn-bg-size, 100% calc(200% + 3 * var(--border-size, 2px)));
 
     border: var(--border-size) solid var(--bg, var(--primary-color));
     box-shadow: var(--box-shadow, 0);
@@ -84,14 +78,8 @@
         var(--sub-bg, transparent) 50%,
         var(--border, var(--primary-color)) 50%
     );
-    background-position: var(
-        --btn-bg-position-2,
-        0% calc(100% + var(--border-size, 2px))
-    );
-    background-size: var(
-        --btn-bg-size,
-        100% calc(200% + 3 * var(--border-size, 2px))
-    );
+    background-position: var(--btn-bg-position-2, 0% calc(100% + var(--border-size, 2px)));
+    background-size: var(--btn-bg-size, 100% calc(200% + 3 * var(--border-size, 2px)));
     border: var(--border-size, 2px) solid var(--border, var(--primary-color));
     box-shadow: var(--box-shadow, 0);
 
@@ -123,10 +111,7 @@ button {
     }
 }
 
-a.button,
-input.button,
-button.button,
-select.button {
+.button {
     max-height: 50px;
 
     > i,

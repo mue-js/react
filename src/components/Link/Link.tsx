@@ -1,59 +1,32 @@
 import React from 'react'
-import {
-    arrayOf,
-    oneOfType,
-    string,
-    number,
-    func,
-    node,
-    object,
-} from 'prop-types'
+// types
+import type { WithChildren, History } from '../../types'
 
-import { useGridify } from '../../hooks'
+import useGridify, { GridifyProps } from '../../hooks/useGridify'
 
-export const Link = ({
-    className,
-    componentName,
-    children,
-    to,
-    history,
-    ...otherProps
-}) => {
-    const { className: gridClassName, ...props } = useGridify({
-        componentName,
-        ...otherProps,
-    })
+export interface LinkProps extends WithChildren, GridifyProps {
+    history: History
+    to: string
+}
+
+export default function Link({ children, to, history, ...rest }: LinkProps) {
+    const { className: gridClassName, ...props } = useGridify(rest as GridifyProps)
 
     return (
-        <a
+        <button
             onClick={() =>
                 history?.push
                     ? history?.push(to)
-                    : console.warn(
-                          `history?.push is not defined, can't push to ${to}`
-                      )
+                    : console.warn(`history?.push is not defined, can't push to ${to}`)
             }
-            className={`${gridClassName ?? ''} pointer flex ${
-                className ?? ''
-            }`.trim()}
+            className={`${gridClassName ?? ''} pointer flex`.trim()}
             {...props}
         >
             {typeof children === 'function' ? children() : children}
-        </a>
+        </button>
     )
 }
 
-Link.propTypes = {
-    className: string,
-    children: oneOfType([string, number, arrayOf(node), node, func]),
-    componentName: string,
-    to: string?.isRequired,
-    history: object?.isRequired,
-}
-
 Link.defaultProps = {
-    className: '',
     componentName: 'Link',
 }
-
-export default Link

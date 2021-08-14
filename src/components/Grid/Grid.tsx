@@ -1,52 +1,35 @@
 import React from 'react'
+// types
+import type { WithChildren } from '../../types'
 
+// components
 import { ErrorBoundary } from '../ErrorBoundary'
 
-import { getStyle, propTypes } from './static'
+// static
+import { getStyle, GetStyleProps } from './static'
 
+// sass
 import './index.scss'
 
-export const UncatchedGrid = ({
-    className,
-    style,
-    columnsTemplate,
-    rowsTemplate,
-    gap,
-    colGap,
-    rowGap,
-    width,
-    height,
-    children,
-}) => {
+export interface GridProps extends WithChildren, GetStyleProps {
+    className: string
+}
+
+export function UncatchedGrid({ className, children, ...rest }: GridProps) {
     return (
         <div
-            className={['grid', className].filter(e => !!e).join(' ')}
-            style={getStyle({
-                style,
-                columnsTemplate,
-                rowsTemplate,
-                gap,
-                rowGap,
-                colGap,
-                width,
-                height,
-            })}
+            className={['grid', className].filter(Boolean).join(' ')}
+            style={getStyle(rest as GetStyleProps)}
         >
             {typeof children === 'function' ? children() : children}
         </div>
     )
 }
 
-UncatchedGrid.propTypes = propTypes
-
-export const Grid = props => {
+export default function Grid(props: GridProps) {
     return (
-        <ErrorBoundary fallback='Houston, on a un problème' showDetails>
+        <ErrorBoundary fallback="Houston, on a un problème" showDetails>
             <UncatchedGrid {...props} />
         </ErrorBoundary>
     )
 }
-
-Grid.propTypes = propTypes
-
-export default Grid

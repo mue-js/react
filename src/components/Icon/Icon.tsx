@@ -1,51 +1,50 @@
 import React from 'react'
 
-import useGridify from '../../hooks/useGridify'
+// types
+import type { WithChildren } from '../../types'
+import { MATERIAL_TYPES } from '../../enum'
 
+// hooks
+import useGridify, { GridifyProps } from '../../hooks/useGridify'
+
+// utils
 import { camelToSnake } from '../../utils/stringFormat'
 
-import { MATERIAL_TYPES, defaultProps, propTypes } from './static'
-
+// sass
 import './index.scss'
 
-export function Icon({
-    children,
-    size,
-    svg,
-    icon,
-    onClick,
-    clickable = !!onClick,
-    iconType,
-    ...otherProps
-}) {
+export type IconTypes = 'outlined' | 'two-tone' | 'round' | 'sharp'
+export interface IconProps extends WithChildren, GridifyProps {
+    icon?: string
+    iconType?: IconTypes
+    size?: string | number
+    svg?: boolean
+}
+
+function Icon({ children, icon, iconType, size, svg, ...rest }: IconProps) {
     const { className, ...props } = useGridify({
         componentName: 'Icon',
-        ...otherProps,
+        ...rest,
     })
 
     const iconFormatted = camelToSnake(
-        icon || (typeof children === 'function' ? children() : children)
+        icon || (typeof children === 'function' ? children() : children),
     )
-
-    const materialClass = `material-icons${
-        MATERIAL_TYPES.includes(iconType) ? `-${iconType}` : ''
-    }`
 
     const classNames = [
         className,
-        materialClass,
+        `material-icons${MATERIAL_TYPES.includes(iconType) ? `-${iconType}` : ''}`,
         svg && iconFormatted,
         size,
-        clickable && 'pointer',
     ]
-        .filter(e => !!e)
+        .filter(Boolean)
         .join(' ')
 
     return (
-        <i className={classNames} onClick={onClick} {...props}>
+        <i className={classNames} {...props}>
             {svg ? (
-                <svg viewBox='0 0 512 512' className='svg-container'>
-                    <path className='svg-path' />
+                <svg viewBox="0 0 512 512" className="svg-container">
+                    <path className="svg-path" />
                 </svg>
             ) : (
                 iconFormatted
@@ -54,7 +53,10 @@ export function Icon({
     )
 }
 
-Icon.propTypes = propTypes
-Icon.defaultProps = defaultProps
+Icon.defaultProps = {
+    iconType: 'round',
+    size: '',
+    svg: false,
+}
 
 export default Icon

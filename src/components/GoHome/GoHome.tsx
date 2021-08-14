@@ -13,27 +13,22 @@ export const GoHome = ({
     style,
     label,
     history,
-    ...otherProps
+    ...rest
 }) => {
     const { className: gridClassName, ...props } = useGridify({
         componentName: 'GoHome',
-        ...otherProps,
+        ...rest,
     })
 
     return (
-        <div
-            className={`z-index-5 ${
-                containerClassName ?? ''
-            } ${gridClassName}`.trim()}
-            {...props}
-        >
+        <div className={`z-index-5 ${containerClassName ?? ''} ${gridClassName}`.trim()} {...props}>
             <Link
-                to='/'
+                to="/"
                 className={`${btnClass} p-16 b-rad-50% ${className}`.trim()}
                 style={style}
                 history={history}
             >
-                <Icon icon='home' />
+                <Icon icon="home" />
                 {label}
             </Link>
         </div>

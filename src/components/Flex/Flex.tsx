@@ -6,20 +6,16 @@ import { ErrorBoundary } from '../ErrorBoundary'
 
 import { defaultProps, propTypes } from './static'
 
-export function UncatchedFlex({ column, reverse, children, ...otherProps }) {
+export function UncatchedFlex({ column, reverse, children, ...rest }) {
     const { className, ...props } = useGridify({
         componentName: 'Flex',
-        ...otherProps,
+        ...rest,
     })
 
     return (
         <div
-            className={[
-                className,
-                column && 'flex-column',
-                reverse && 'reverse',
-            ]
-                .filter(e => !!e)
+            className={[className, column && 'flex-column', reverse && 'reverse']
+                .filter(Boolean)
                 .join(' ')}
             {...props}
         >
@@ -31,9 +27,9 @@ export function UncatchedFlex({ column, reverse, children, ...otherProps }) {
 UncatchedFlex.propTypes = propTypes
 UncatchedFlex.defaultProps = defaultProps
 
-export const Flex = props => {
+export const Flex = (props) => {
     return (
-        <ErrorBoundary fallback='Houston, on a un problème' showDetails>
+        <ErrorBoundary fallback="Houston, on a un problème" showDetails>
             <UncatchedFlex {...props} />
         </ErrorBoundary>
     )

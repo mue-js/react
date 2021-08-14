@@ -78,26 +78,18 @@ export const Dropdown = ({
 
     return (
         <div
-            className={[
-                containerClassName,
-                'dropdown-container',
-                invisible && 'invisible',
-            ]
-                ?.filter(e => !!e)
+            className={[containerClassName, 'dropdown-container', invisible && 'invisible']
+                ?.filter(Boolean)
                 .join(' ')}
             ref={ref}
             style={style}
         >
-            <a
-                className={[className, isOpen && 'open']
-                    ?.filter(e => !!e)
-                    .join(' ')}
+            <button
+                className={[className, isOpen && 'open']?.filter(Boolean).join(' ')}
                 onClick={handleClick}
             >
-                {typeof trigger === 'function'
-                    ? trigger({ isOpen, open, close })
-                    : trigger}
-            </a>
+                {typeof trigger === 'function' ? trigger({ isOpen, open, close }) : trigger}
+            </button>
 
             {(isOpen || !removeFromDOMWhenClosed) && (
                 <div
@@ -107,13 +99,11 @@ export const Dropdown = ({
                         direction && 'to-' + direction,
                         contentClassName,
                     ]
-                        ?.filter(e => !!e)
+                        ?.filter(Boolean)
                         .join(' ')}
                     style={contentStyle}
                 >
-                    {typeof children === 'function'
-                        ? children({ close })
-                        : children}
+                    {typeof children === 'function' ? children({ close }) : children}
                 </div>
             )}
         </div>

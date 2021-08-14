@@ -120,7 +120,7 @@ export function UncatchedModal({
                 containerClassName,
                 open && (closing ? 'to-opacity-0' : 'to-opacity-100'),
             ]
-                ?.filter(e => !!e)
+                ?.filter(Boolean)
                 .join(' ')}
             style={{
                 '--animation-duration': animationDuration + 'ms',
@@ -129,19 +129,13 @@ export function UncatchedModal({
         >
             <div
                 id={id}
-                className={[
-                    'modal',
-                    className,
-                    getTranslateAnimation({ open, closing, from }),
-                ]
-                    ?.filter(e => !!e)
+                className={['modal', className, getTranslateAnimation({ open, closing, from })]
+                    ?.filter(Boolean)
                     .join(' ')}
                 ref={ref}
                 style={{ '--animation-duration': animationDuration + 'ms' }}
             >
-                {typeof children === 'function'
-                    ? children({ close, valid, refuse })
-                    : children}
+                {typeof children === 'function' ? children({ close, valid, refuse }) : children}
             </div>
         </div>
     )
@@ -152,9 +146,9 @@ export function UncatchedModal({
 UncatchedModal.propTypes = propTypes
 UncatchedModal.defaultProps = defaultProps
 
-export const Modal = props => {
+export const Modal = (props) => {
     return (
-        <ErrorBoundary fallback='Houston, on a un problème' showDetails>
+        <ErrorBoundary fallback="Houston, on a un problème" showDetails>
             <UncatchedModal {...props} />
         </ErrorBoundary>
     )
