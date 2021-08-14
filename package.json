@@ -1,0 +1,59 @@
+{
+    "name": "react-muejs",
+    "version": "1.1.0",
+    "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
+    "main": "src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Cobelt/muejs.git"
+    },
+    "dependencies": {
+        "lodash.memoize": "^4.1.2",
+        "muejs": "^3.0.2",
+        "uuid": "^8.3.2"
+    },
+    "publishConfig": {
+        "registry": "https://registry.yarnpkg.com"
+    },
+    "peerDependencies": {
+        "react": "^17.0.0",
+        "react-dom": "^17.0.0",
+        "react-hook-form": "^7.0.3"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.14.8",
+        "@babel/core": "^7.15.0",
+        "@babel/plugin-proposal-class-properties": "^7.14.5",
+        "@babel/plugin-proposal-export-default-from": "^7.14.5",
+        "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
+        "@babel/preset-env": "^7.15.0",
+        "@babel/preset-react": "^7.14.5",
+        "@babel/register": "^7.15.3",
+        "@babel/runtime": "^7.15.3",
+        "babel-loader": "^8.2.2",
+        "clean-webpack-plugin": "^4.0.0-alpha.0",
+        "copy-webpack-plugin": "^9.0.1",
+        "css-loader": "^6.2.0",
+        "html-loader": "^2.1.2",
+        "html-webpack-plugin": "^5.3.2",
+        "mini-css-extract-plugin": "^2.2.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-hook-form": "^7.12.2",
+        "sass": "^1.37.5",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.2.1",
+        "webpack": "^5.50.0",
+        "webpack-cli": "^4.7.2",
+        "webpack-dev-server": "^3.11.2"
+    },
+    "engines": {
+        "node": ">=8",
+        "npm": ">=5"
+    },
+    "scripts": {
+        "build": "webpack --config webpack.babel.js",
+        "watch": "webpack --watch --config webpack.babel.js",
+        "transpile": "babel src -d dist --copy-files"
+    }
+}
