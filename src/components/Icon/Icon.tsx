@@ -21,7 +21,14 @@ export interface IconProps extends WithChildren, GridifyProps {
     svg?: boolean
 }
 
-function Icon({ children, icon, iconType, size, svg, ...rest }: IconProps) {
+export default function Icon({
+    children,
+    icon,
+    iconType = 'round',
+    size,
+    svg = false,
+    ...rest
+}: IconProps) {
     const { className, ...props } = useGridify({
         componentName: 'Icon',
         ...rest,
@@ -52,11 +59,3 @@ function Icon({ children, icon, iconType, size, svg, ...rest }: IconProps) {
         </i>
     )
 }
-
-Icon.defaultProps = {
-    iconType: 'round',
-    size: '',
-    svg: false,
-}
-
-export default Icon

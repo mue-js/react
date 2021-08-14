@@ -1,12 +1,20 @@
 import React from 'react'
 
-import useGridify from '../../hooks/useGridify'
+// types
+import { WithChildren } from '../../types'
 
-import { ErrorBoundary } from '../ErrorBoundary'
+// hooks
+import useGridify, { GridifyProps } from '../../hooks/useGridify'
 
-import { defaultProps, propTypes } from './static'
+// components
+import ErrorBoundary from '../ErrorBoundary'
 
-export function UncatchedFlex({ column, reverse, children, ...rest }) {
+export interface FlexProps extends WithChildren, GridifyProps {
+    column: boolean
+    reverse: boolean
+}
+
+export function UncatchedFlex({ column = false, reverse = false, children, ...rest }: FlexProps) {
     const { className, ...props } = useGridify({
         componentName: 'Flex',
         ...rest,
@@ -24,18 +32,12 @@ export function UncatchedFlex({ column, reverse, children, ...rest }) {
     )
 }
 
-UncatchedFlex.propTypes = propTypes
-UncatchedFlex.defaultProps = defaultProps
-
-export const Flex = (props) => {
+export const Flex = (props: FlexProps) => {
     return (
         <ErrorBoundary fallback="Houston, on a un problème" showDetails>
             <UncatchedFlex {...props} />
         </ErrorBoundary>
     )
 }
-
-Flex.propTypes = propTypes
-Flex.defaultProps = defaultProps
 
 export default Flex

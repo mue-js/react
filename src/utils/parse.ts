@@ -1,10 +1,11 @@
 import memoize from 'lodash.memoize'
 
-function _tryParse(item) {
-    let parsed = typeof item !== 'string' ? JSON.stringify(item) : item
+function _tryParse(item: string | object) {
+    const toParse: string = typeof item === 'string' ? item : JSON.stringify(item)
+    let parsed
 
     try {
-        parsed = JSON.parse(item)
+        parsed = JSON.parse(toParse)
     } catch (e) {
         return item
     }

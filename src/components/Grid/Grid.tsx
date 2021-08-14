@@ -3,7 +3,7 @@ import React from 'react'
 import type { WithChildren } from '../../types'
 
 // components
-import { ErrorBoundary } from '../ErrorBoundary'
+import ErrorBoundary from '../ErrorBoundary'
 
 // static
 import { getStyle, GetStyleProps } from './static'

@@ -6,17 +6,10 @@ import type { WithChildren } from '../../types'
 import useGridify, { GridifyProps } from '../../hooks/useGridify'
 
 // components
-import { ErrorBoundary } from '../ErrorBoundary'
+import ErrorBoundary from '../ErrorBoundary'
 
 // sass
 import './index.scss'
-
-const defaultProps = {
-    componentName: 'Gridified',
-    fill: false,
-    as: 'div',
-    component: undefined,
-}
 
 export interface GridifiedProps extends WithChildren, GridifyProps {
     fill?: boolean
@@ -25,16 +18,21 @@ export interface GridifiedProps extends WithChildren, GridifyProps {
 }
 
 export const UncatchedGridified = ({
-    as: As,
+    as: As = 'div',
+    componentName = 'Gridified',
     component: Component,
     children,
-    fill,
+    fill = false,
     ...rest
 }: GridifiedProps) => {
-    const { className: gridClassName, height, width, ...props } = useGridify(rest)
+    const { className, height, width, ...props } = useGridify({
+        ...rest,
+        componentName,
+    } as GridifyProps)
 
-    const classNames = [gridClassName, fill && 'fill'].filter(Boolean).join(' ')
+    const classNames = [className, fill && 'fill'].filter(Boolean).join(' ')
 
+    // forced to do this because svg has mismatching height and width
     return Component ? (
         <Component className={classNames} height={height} width={width} {...props}>
             {typeof children === 'function' ? children() : children}
@@ -46,18 +44,10 @@ export const UncatchedGridified = ({
     )
 }
 
-UncatchedGridified.defaultProps = defaultProps
-
 export default function Gridified(props: GridifiedProps) {
     return (
         <ErrorBoundary fallback="Houston, on a un problème" showDetails>
             <UncatchedGridified {...props} />
         </ErrorBoundary>
     )
-}
-
-Gridified.defaultProps = {
-    componentName: 'Gridified',
-    fill: false,
-    type: 'div',
 }

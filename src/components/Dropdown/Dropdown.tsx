@@ -1,48 +1,78 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { any, bool, func, object, string } from 'prop-types'
+import React, { FC, ReactNode, useState, useEffect, useRef } from 'react'
+import { DropdownTagsType } from '../../types'
 
-import './index.scss'
+export interface DropdownChildrenProps {
+    close: () => void
+}
 
-export const Dropdown = ({
+export interface DropdownTriggerProps {
+    isOpen: boolean
+    open: () => void
+    close: () => void
+}
+
+export interface DropdownProps {
+    tag?: DropdownTagsType
+    role?: string
+    trigger: FC<DropdownTriggerProps>
+    children?: ReactNode
+    content?: any
+    direction?: string
+    style?: object
+    contentStyle?: object
+    className?: string
+    containerClassName?: string
+    contentClassName?: string
+    invisible?: boolean
+    disabled?: boolean
+    removeFromDOMWhenClosed?: boolean
+    onClick?: () => void
+    onOpen?: () => void
+    onClose?: () => void
+}
+
+const Dropdown: FC<DropdownProps> = ({
+    tag: Tag = 'div',
+    role,
     trigger,
     content,
     children = content,
     direction,
     style,
     contentStyle,
-    className,
-    containerClassName,
-    contentClassName,
-    invisible,
-    disabled,
-    removeFromDOMWhenClosed,
-    onClick,
-    onOpen,
-    onClose,
+    className = '',
+    containerClassName = '',
+    contentClassName = '',
+    invisible = false,
+    disabled = false,
+    removeFromDOMWhenClosed = false,
+    onClick = () => undefined,
+    onOpen = () => undefined,
+    onClose = () => undefined,
 }) => {
-    const ref = useRef(null)
+    const ref = useRef<any>(null)
     const [isOpen, _setOpen] = useState(false)
     const isOpenRef = useRef(isOpen)
 
-    function setOpen(v) {
+    const setOpen = (v: boolean) => {
         isOpenRef.current = v
         _setOpen(v)
     }
 
-    function open() {
+    const open = () => {
         if (!isOpenRef.current) {
             onOpen()
             setOpen(true)
         }
     }
-    function close() {
+    const close = () => {
         if (isOpenRef.current) {
             onClose()
             setOpen(false)
         }
     }
 
-    function handleClick(e) {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         e.stopPropagation()
         if (disabled) return null
@@ -50,8 +80,14 @@ export const Dropdown = ({
         onClick()
     }
 
-    function escFunction(e) {
-        if (e.keyCode === 27) {
+    const handleSpace = (e: KeyboardEvent | React.KeyboardEvent) => {
+        if (disabled) return null
+        isOpen ? close() : open()
+        onClick()
+    }
+
+    const escFunction = (e: KeyboardEvent) => {
+        if (e.code === '27') {
             close()
         }
     }
@@ -63,8 +99,8 @@ export const Dropdown = ({
         }
     }, [])
 
-    function handleClickOutside(e) {
-        if (ref.current && !ref.current.contains(e.target)) {
+    function handleClickOutside(e: MouseEvent) {
+        if (ref.current && !ref.current.contains(e.target as Node)) {
             close()
         }
     }
@@ -77,15 +113,17 @@ export const Dropdown = ({
     }, [])
 
     return (
-        <div
+        <Tag
+            role={role}
             className={[containerClassName, 'dropdown-container', invisible && 'invisible']
-                ?.filter(Boolean)
+                .filter(Boolean)
                 .join(' ')}
             ref={ref}
             style={style}
         >
             <button
-                className={[className, isOpen && 'open']?.filter(Boolean).join(' ')}
+                type="button"
+                className={['inline-block', className, isOpen && 'open'].filter(Boolean).join(' ')}
                 onClick={handleClick}
             >
                 {typeof trigger === 'function' ? trigger({ isOpen, open, close }) : trigger}
@@ -94,50 +132,20 @@ export const Dropdown = ({
             {(isOpen || !removeFromDOMWhenClosed) && (
                 <div
                     className={[
-                        'dropdown-content overflow-y-auto',
+                        'dropdown-content overflow-y-auto border border-dark-15',
                         isOpen && 'displayed',
                         direction && 'to-' + direction,
                         contentClassName,
                     ]
-                        ?.filter(Boolean)
+                        .filter(Boolean)
                         .join(' ')}
                     style={contentStyle}
                 >
                     {typeof children === 'function' ? children({ close }) : children}
                 </div>
             )}
-        </div>
+        </Tag>
     )
-}
-
-Dropdown.propTypes = {
-    trigger: any,
-    content: any,
-    children: any,
-    direction: string,
-    style: object,
-    contentStyle: object,
-    className: string,
-    containerClassName: string,
-    contentClassName: string,
-    invisible: bool,
-    disabled: bool,
-    removeFromDOMWhenClosed: bool,
-    onClick: func,
-    onOpen: func,
-    onClose: func,
-}
-
-Dropdown.defaultProps = {
-    className: '',
-    containerClassName: '',
-    contentClassName: '',
-    invisible: false,
-    disabled: false,
-    removeFromDOMWhenClosed: false,
-    onClick: () => undefined,
-    onOpen: () => undefined,
-    onClose: () => undefined,
 }
 
 export default Dropdown

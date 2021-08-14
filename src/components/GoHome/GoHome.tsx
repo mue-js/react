@@ -1,30 +1,37 @@
-import React from 'react'
-import { object, string } from 'prop-types'
+import React, { CSSProperties } from 'react'
+import type { History } from '../../types'
 
-import { useGridify } from '../../hooks'
+import useGridify, { GridifyProps } from '../../hooks/useGridify'
 
-import { Icon } from '../Icon'
-import { Link } from '../Link'
+import Icon from '../Icon'
+import Link from '../Link'
 
-export const GoHome = ({
-    btnClass,
-    className,
+export interface GoHomeProps extends GridifyProps {
+    btnClass?: string
+    containerClassName?: string
+    style?: CSSProperties
+    label?: string
+    history: History
+}
+
+export default function GoHome({
+    btnClass = 'btn-primary',
     containerClassName,
     style,
     label,
     history,
     ...rest
-}) => {
-    const { className: gridClassName, ...props } = useGridify({
+}: GoHomeProps) {
+    const { className, ...props } = useGridify({
         componentName: 'GoHome',
         ...rest,
     })
 
     return (
-        <div className={`z-index-5 ${containerClassName ?? ''} ${gridClassName}`.trim()} {...props}>
+        <div className={`z-index-5 ${containerClassName ?? ''} ${className}`.trim()} {...props}>
             <Link
                 to="/"
-                className={`${btnClass} p-16 b-rad-50% ${className}`.trim()}
+                className={`${btnClass} p-16 b-rad-50%`.trim()}
                 style={style}
                 history={history}
             >
@@ -34,20 +41,3 @@ export const GoHome = ({
         </div>
     )
 }
-
-GoHome.propTypes = {
-    btnClass: string,
-    className: string,
-    containerClassName: string,
-    label: string,
-    style: object,
-    history: object?.isRequired,
-}
-
-GoHome.defaultProps = {
-    btnClass: 'btn-primary',
-    className: '',
-    containerClassName: '',
-}
-
-export default GoHome

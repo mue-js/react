@@ -1,35 +1,54 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+    ReactNode,
+    CSSProperties,
+    FC,
+} from 'react'
 import { createPortal } from 'react-dom'
+import { onEscape } from '../../utils/keyboardHandlers'
 
-import { ErrorBoundary } from '../ErrorBoundary'
+import ErrorBoundary from '../ErrorBoundary'
 
-import './index.scss'
+import { getTranslateAnimation } from './static'
+import type { FuncPropBool, FuncPropAny, FuncNoProp } from './static'
+import { DirectionType } from '../../types'
 
-import { TOP, BOTTOM, LEFT, RIGHT, propTypes, defaultProps } from './static'
+export interface ModalChildrenProps {
+    close: FuncPropBool
+    valid: FuncPropAny
+    refuse: FuncNoProp
+}
 
-function getTranslateAnimation({ open, closing, from }) {
-    switch (from) {
-        case TOP: {
-            return open && (closing ? 'to-translateY--100' : 'to-translateY--0')
-        }
-        case LEFT: {
-            return open && (closing ? 'to-translateX--100' : 'to-translateX--0')
-        }
-        case RIGHT: {
-            return open && (closing ? 'to-translateX-100' : 'to-translateX-0')
-        }
-        case BOTTOM:
-        default:
-            return open && (closing ? 'to-translateY-100' : 'to-translateY-0')
-    }
+export interface ModalProps {
+    id?: string
+    align?: string
+    justify?: string
+    padding?: string
+    className?: string
+    containerClassName?: string
+    animationDuration?: number
+    from?: DirectionType
+    style?: CSSProperties
+    containerStyle?: CSSProperties
+    children?: ReactNode | ((prop: ModalChildrenProps) => ReactNode)
+    onClose: FuncPropBool
+    onValid?: FuncPropAny
+    onRefuse?: FuncNoProp
+    whileClosing?: FuncPropBool
 }
 
 export function UncatchedModal({
     id,
-    className = '',
+    align = 'items-center',
+    justify = 'justify-center',
+    padding = 'p-30',
+    className = 'max-w-60vw h-50vh',
     containerClassName = '',
     animationDuration = 300,
-    from = BOTTOM,
+    from = 'bottom',
     style = {},
     containerStyle = {},
     children,
@@ -37,58 +56,61 @@ export function UncatchedModal({
     onValid = () => undefined,
     onRefuse = () => undefined,
     whileClosing = () => undefined,
-} = {}) {
+}: ModalProps) {
+    const ref = useRef<HTMLDivElement>(null)
     const [open, _setOpen] = useState(true)
     const [closing, _setClosing] = useState(false)
     const openRef = useRef(open)
     const closingRef = useRef(closing)
-    const ref = useRef(null)
 
-    function setOpen(v) {
-        openRef.current = v
-        _setOpen(v)
+    const setOpen: FuncPropBool = v => {
+        const newValue = v ?? false
+        openRef.current = newValue
+        _setOpen(newValue)
     }
 
     // start animation
-    function setClosing(v) {
-        closingRef.current = v
-        _setClosing(v)
+    const setClosing: FuncPropBool = v => {
+        const newValue = v ?? false
+        closingRef.current = newValue
+        _setClosing(newValue)
     }
 
-    function close(hasRefused) {
+    const close: FuncPropBool = hasRefused => {
         if (openRef.current) {
-            whileClosing({ hasRefused })
+            whileClosing(hasRefused)
             setClosing(true)
         }
     }
 
-    function valid(v) {
+    const valid: FuncPropAny = v => {
         onValid(v)
         close(false)
     }
-    function refuse() {
+    const refuse: FuncNoProp = () => {
         onRefuse()
         close(true)
     }
 
-    function escFunction(e) {
-        if (e.keyCode === 27) {
-            close(true)
-        }
-    }
+    const escFunction = useCallback(
+        (e: KeyboardEvent | React.KeyboardEvent) => onEscape(e, () => close(true)),
+        [],
+    )
+
     useEffect(() => {
         document.addEventListener('keydown', escFunction, false)
 
         return () => {
             document.removeEventListener('keydown', escFunction, false)
         }
-    }, [])
+    }, [escFunction])
 
-    function handleClickOutside(e) {
-        if (ref.current && !ref.current.contains(e.target)) {
+    function handleClickOutside(e: MouseEvent) {
+        if (ref.current && !ref.current.contains(e.target as Node)) {
             close(true)
         }
     }
+
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside)
         return () => {
@@ -97,17 +119,23 @@ export function UncatchedModal({
     }, [])
 
     useEffect(() => {
-        if (open && closing) {
-            const timer = setTimeout(() => {
-                if (open) {
-                    setOpen(false)
-                    setClosing(false)
-                    // send false to simplify the usage of onClose
-                    // example : onClose={setOpen} instead of onClose={() => setOpen(false)}
-                    onClose(false)
-                }
-            }, animationDuration)
-            return () => clearTimeout(timer)
+        if (open) {
+            if (closing) {
+                document.body.classList.toggle('modal-open', false)
+
+                const timer = setTimeout(() => {
+                    if (open) {
+                        setOpen(false)
+                        setClosing(false)
+                        // send false to simplify the usage of onClose
+                        // example : onClose={setOpen} instead of onClose={() => setOpen(false)}
+                        onClose(false)
+                    }
+                }, animationDuration)
+                return () => clearTimeout(timer)
+            } else {
+                document.body.classList.toggle('modal-open', true)
+            }
         }
     }, [open, closing])
 
@@ -116,45 +144,42 @@ export function UncatchedModal({
     const modal = (
         <div
             className={[
-                'modal-bg',
+                'modal-bg flex',
+                align,
+                justify,
                 containerClassName,
                 open && (closing ? 'to-opacity-0' : 'to-opacity-100'),
             ]
-                ?.filter(Boolean)
+                ?.filter(e => !!e)
                 .join(' ')}
-            style={{
-                '--animation-duration': animationDuration + 'ms',
-                ...containerStyle,
-            }}
+            style={{ '--animation-duration': animationDuration, ...containerStyle }}
         >
             <div
                 id={id}
-                className={['modal', className, getTranslateAnimation({ open, closing, from })]
-                    ?.filter(Boolean)
+                className={[
+                    'modal flex flex-col rounded-lg w-100%',
+                    className,
+                    padding,
+                    getTranslateAnimation({ open, closing, from }),
+                ]
+                    ?.filter(e => !!e)
                     .join(' ')}
                 ref={ref}
-                style={{ '--animation-duration': animationDuration + 'ms' }}
+                style={style}
             >
                 {typeof children === 'function' ? children({ close, valid, refuse }) : children}
             </div>
         </div>
     )
 
-    return createPortal(modal, document.getElementById('modal-root'))
+    const modalRoot = document.getElementById('modal-root')
+    return modalRoot ? (createPortal(modal, modalRoot) as any) : null
 }
 
-UncatchedModal.propTypes = propTypes
-UncatchedModal.defaultProps = defaultProps
-
-export const Modal = (props) => {
+export default function Modal(props: ModalProps) {
     return (
         <ErrorBoundary fallback="Houston, on a un problème" showDetails>
             <UncatchedModal {...props} />
         </ErrorBoundary>
     )
 }
-
-Modal.propTypes = propTypes
-Modal.defaultProps = defaultProps
-
-export default Modal

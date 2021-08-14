@@ -40,13 +40,13 @@ export function ErrorMessage({
     errorInfo,
     ...rest
 }: ErrorMessageProps) {
-    const { className: errorClassName, ...props } = useGridify({
+    const { className, ...props } = useGridify({
         componentName: 'ErrorMessage',
         ...rest,
     })
 
     return (
-        <div className={`p-4% ${errorClassName ?? ''}`} {...props}>
+        <div className={`p-4% ${className ?? ''}`} {...props}>
             {typeof fallback === 'function' ? fallback({ error, errorInfo }) : <h2>{fallback}</h2>}
 
             {showDetails && (

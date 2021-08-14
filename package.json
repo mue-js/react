@@ -3,6 +3,25 @@
     "version": "1.0.0",
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
     "main": "src/index.js",
+    "exports": {
+        ".": "./src/index.js",
+        "./hooks": "./src/hooks/index.ts",
+        "./contexts": "./src/contexts/index.ts",
+        "./Breadcrumb": "./src/components/Breadcrumb/index.ts",
+        "./Button": "./src/components/Button/index.ts",
+        "./Card": "./src/components/Card/index.ts",
+        "./Dropdown": "./src/components/Dropdown/index.ts",
+        "./ErrorBoundary": "./src/components/ErrorBoundary/index.ts",
+        "./Flex": "./src/components/Flex/index.ts",
+        "./Go/back": "./src/components/GoBack/index.ts",
+        "./Go/home": "./src/components/GoHome/index.ts",
+        "./Grid": "./src/components/Grid/index.ts",
+        "./Gridified": "./src/components/Gridified/index.ts",
+        "./Icon": "./src/components/Icon/index.ts",
+        "./Link": "./src/components/Link/index.ts",
+        "./Modal": "./src/components/Modal/index.ts",
+        "./Spinner": "./src/components/Spinner/index.ts"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/Cobelt/muejs.git"

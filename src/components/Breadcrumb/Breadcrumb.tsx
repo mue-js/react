@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import type { History, WithChildren } from '../../types'
 
 import Link from '../Link'
@@ -21,7 +21,7 @@ export interface BreacrumbProps extends WithChildren {
     noLinkAfterId?: string | number
 }
 
-function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps) {
+export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps) {
     const entries = steps instanceof Object && Object.entries(steps)
 
     if (!entries?.length) return null
@@ -91,5 +91,3 @@ function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps
         </>
     )
 }
-
-export default Breadcrumb

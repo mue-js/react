@@ -1,12 +1,20 @@
-import React from 'react'
-import { object, string } from 'prop-types'
+import React, { CSSProperties } from 'react'
+import type { History } from '../../types'
 
-import { useGridify } from '../../hooks'
+import useGridify, { GridifyProps } from '../../hooks/useGridify'
 
-import { Icon } from '../Icon'
-import { Link } from '../Link'
+import Icon from '../Icon'
+import Link from '../Link'
 
-export const GoBack = ({ className, style, to, label, history, ...rest }) => {
+export interface GoBackProps extends GridifyProps {
+    btnClass?: string
+    containerClassName?: string
+    style?: CSSProperties
+    label?: string
+    history: History
+}
+
+export default function GoBack({ style, to, label, history, ...rest }) {
     function handleClick() {
         if (history?.goBack) {
             history.goBack()
@@ -14,7 +22,7 @@ export const GoBack = ({ className, style, to, label, history, ...rest }) => {
             console.warn('history?.goBack is not defined, could not go to previous page')
         }
     }
-    const { className: gridClassName, ...props } = useGridify({
+    const { className, ...props } = useGridify({
         componentName: 'GoBack',
         ...rest,
     })
@@ -22,7 +30,7 @@ export const GoBack = ({ className, style, to, label, history, ...rest }) => {
     const cN = `btn-primary p-16 b-rad-50% ${className ?? ''}`.trim()
 
     return (
-        <div className={`z-index-5 ${gridClassName ?? ''}`} {...props}>
+        <div className={`z-index-5 ${className ?? ''}`.trim()} {...props}>
             {to ? (
                 <Link className={cN} to={to} history={history} style={style}>
                     <Icon icon="arrow_left" />
@@ -37,17 +45,3 @@ export const GoBack = ({ className, style, to, label, history, ...rest }) => {
         </div>
     )
 }
-
-GoBack.propTypes = {
-    className: string,
-    label: string,
-    to: string,
-    style: object,
-    history: object?.isRequired,
-}
-
-GoBack.defaultProps = {
-    className: '',
-}
-
-export default GoBack

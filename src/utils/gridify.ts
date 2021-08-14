@@ -5,7 +5,7 @@ export interface GetCSSVarForDimensionProps {
     dimension: ResponsiveOrValue
     size: string
     defaultValue: string
-    getPrefix: (dim: string) => string
+    getPrefix: (dim: string | number) => string
 }
 
 export const getCSSVarForDimension = memoize(

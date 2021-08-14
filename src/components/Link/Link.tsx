@@ -9,8 +9,14 @@ export interface LinkProps extends WithChildren, GridifyProps {
     to: string
 }
 
-export default function Link({ children, to, history, ...rest }: LinkProps) {
-    const { className: gridClassName, ...props } = useGridify(rest as GridifyProps)
+export default function Link({
+    children,
+    componentName = 'Link',
+    to,
+    history,
+    ...rest
+}: LinkProps) {
+    const { className, ...props } = useGridify({ ...rest, componentName } as GridifyProps)
 
     return (
         <button
@@ -19,14 +25,10 @@ export default function Link({ children, to, history, ...rest }: LinkProps) {
                     ? history?.push(to)
                     : console.warn(`history?.push is not defined, can't push to ${to}`)
             }
-            className={`${gridClassName ?? ''} pointer flex`.trim()}
+            className={`${className ?? ''} pointer flex`.trim()}
             {...props}
         >
             {typeof children === 'function' ? children() : children}
         </button>
     )
-}
-
-Link.defaultProps = {
-    componentName: 'Link',
 }

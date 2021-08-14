@@ -1,45 +1,33 @@
-import {
-    arrayOf,
-    func,
-    node,
-    number,
-    object,
-    oneOf,
-    oneOfType,
-    string,
-} from 'prop-types'
+import { TOP, LEFT, RIGHT, BOTTOM } from '../../enum'
+import type { DirectionType } from '../../types'
 
-export const TOP = 'top'
-export const BOTTOM = 'bottom'
-export const LEFT = 'left'
-export const RIGHT = 'right'
+export type FuncPropAny = (v: any) => void
+export type FuncPropBool = (bool: boolean) => void
+export type FuncNoProp = () => void
 
-export const DIRECTIONS = [TOP, BOTTOM, LEFT, RIGHT]
-
-export const propTypes = {
-    id: string,
-    className: string,
-    containerClassName: string,
-    animationDuration: number,
-    from: oneOf(DIRECTIONS),
-    style: object,
-    containerStyle: object,
-    children: oneOfType([string, number, arrayOf(node), node, func]),
-    onClose: func,
-    onValid: func,
-    onRefuse: func,
-    whileClosing: func,
+interface TranslateAnimationProps {
+    open: boolean
+    closing: boolean
+    from: DirectionType
 }
 
-export const defaultProps = {
-    className: '',
-    containerClassName: '',
-    animationDuration: 300,
-    from: BOTTOM,
-    style: {},
-    containerStyle: {},
-    onClose: () => undefined,
-    onValid: () => undefined,
-    onRefuse: () => undefined,
-    whileClosing: () => undefined,
+export function getTranslateAnimation({
+    open,
+    closing,
+    from,
+}: TranslateAnimationProps): string | false {
+    switch (from) {
+        case TOP: {
+            return open && (closing ? 'to-translateY--100' : 'to-translateY--0')
+        }
+        case LEFT: {
+            return open && (closing ? 'to-translateX--100' : 'to-translateX--0')
+        }
+        case RIGHT: {
+            return open && (closing ? 'to-translateX-100' : 'to-translateX-0')
+        }
+        case BOTTOM:
+        default:
+            return open && (closing ? 'to-translateY-100' : 'to-translateY-0')
+    }
 }

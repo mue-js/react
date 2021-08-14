@@ -1,40 +1,29 @@
 import React from 'react'
-import { object, string } from 'prop-types'
+import type { WithChildren } from '../../types'
 
-import { ErrorBoundary } from '../ErrorBoundary'
-import { Element } from '../GridElement'
-import { Link } from '../Link'
+import Link, { LinkProps } from '../Link'
+import ErrorBoundary from '../ErrorBoundary'
 
 import './index.scss'
 
-function UncatchedCard({ backgroundColor, to, style, ...props }) {
-    const Tag = to ? Link : Element
+export interface CardProps extends WithChildren, LinkProps {
+    backgroundColor: string
+}
+
+export function UncatchedCard({ backgroundColor, style, children, ...props }: CardProps) {
     return (
-        <Tag
-            {...props}
-            to={to}
-            componentName='Card Link'
-            style={{ ...style, '--card-bg': backgroundColor }}
-        />
+        <Link {...props}>
+            <div className="card" style={{ ...style, '--card-bg': backgroundColor }}>
+                {children}
+            </div>
+        </Link>
     )
 }
 
-export function Card(props) {
+export default function Card(props: CardProps) {
     return (
-        <ErrorBoundary
-            className='card'
-            fallback='Houston, on a un problème'
-            showDetails
-        >
+        <ErrorBoundary className="card" fallback="Houston, on a un problème" showDetails>
             <UncatchedCard {...props} />
         </ErrorBoundary>
     )
 }
-
-Card.propTypes = {
-    backgroundColor: string,
-    to: string,
-    style: object,
-}
-
-export default Card

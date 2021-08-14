@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { WithChildren } from '../types'
+import { WithChildren } from '../../types'
 
 // output
 

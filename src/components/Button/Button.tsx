@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from 'react'
 
 // types
-import type { ColorsType, DirectionsType, IconSide, WithChildren } from '../../types'
+import type { DirectionType, IconSide, WithChildren } from '../../types'
 import { DIRECTIONS } from '../../enum'
 
 // hooks
@@ -21,9 +21,9 @@ export interface ButtonProps
         GridifyProps,
         ButtonHTMLAttributes<HTMLButtonElement> {
     aspect?: ButtonAspect
-    color?: ColorsType
-    customColor?: ColorsType
-    direction?: DirectionsType
+    color?: string
+    customColor?: string
+    direction?: DirectionType
     iconSide?: IconSide
     icon?: string
     padding?: string
@@ -32,22 +32,23 @@ export interface ButtonProps
     size?: ButtonSize
 }
 
-function Button({
-    aspect,
+export default function Button({
+    aspect = 'filled',
     children,
-    color,
+    color = 'primary',
     customColor,
-    direction,
-    iconSide,
-    icon,
+    direction = 'bottom',
+    iconSide = 'right',
+    icon = null,
     padding,
     size,
     text,
     textClassName,
+    type = 'button',
     ...rest
 }: ButtonProps) {
     const {
-        className: gridClassName,
+        className,
         style: gridStyle = {},
         ...props
     } = useGridify({
@@ -58,7 +59,7 @@ function Button({
     return (
         <button
             className={[
-                gridClassName,
+                className,
                 `btn-${color && aspect !== 'filled' ? `${aspect}-${color}` : color ?? ''}`,
                 icon && `btn-with-icon icon-${iconSide}`,
                 `to-${DIRECTIONS.includes(direction) ? direction : 'bottom'}`,
@@ -66,6 +67,7 @@ function Button({
                 .filter(Boolean)
                 .join(' ')}
             style={gridStyle}
+            type={type}
             {...props}
         >
             {!children && (
@@ -83,18 +85,3 @@ function Button({
         </button>
     )
 }
-
-Button.defaultProps = {
-    aspect: 'filled',
-    color: 'primary',
-    direction: 'bottom',
-    type: 'button',
-    disabled: false,
-
-    className: '',
-    icon: null,
-    iconSide: 'right',
-    text: 'Button',
-}
-
-export default Button

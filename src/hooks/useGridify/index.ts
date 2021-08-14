@@ -1,9 +1,10 @@
 // types
-import type { ResponsiveOrValue } from '../types'
+import type { CSSProperties } from 'react'
+import type { ResponsiveOrValue } from '../../types'
 
 // utils
-import { camelToKebab } from '../utils/stringFormat'
-import { getCSSVarForDimension } from '../utils/gridify'
+import { camelToKebab } from '../../utils/stringFormat'
+import { getCSSVarForDimension } from '../../utils/gridify'
 
 export interface GridifyProps {
     col?: ResponsiveOrValue
@@ -14,7 +15,7 @@ export interface GridifyProps {
     fullHeight?: boolean
 
     className?: string
-    style?: object
+    style?: CSSProperties
     position?: string
     justify?: string
     align?: string
