@@ -1,6 +1,6 @@
 {
     "name": "@mue-js/react",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
     "main": "src/index.ts",
     "exports": {
