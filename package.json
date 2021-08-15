@@ -5,7 +5,7 @@
     "main": "src/index.ts",
     "exports": {
         ".": "./src/index.ts",
-        "./": "./src/lib/",
+        "./": "./lib/",
         "./raw": "./src/components/",
         "./styles": "./src/styles.ts",
         "./hooks": "./src/hooks/",
