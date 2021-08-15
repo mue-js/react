@@ -4,11 +4,10 @@
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
     "main": "lib/index.js",
     "exports": {
-        ".": "./lib/src/index.js",
-        "./": "./lib/src/components/",
-        "./styles": "./lib/src/styles.ts",
-        "./hooks": "./lib/src/hooks/",
-        "./contexts": "./lib/src/contexts/"
+        ".": "./lib/index.js",
+        "./": "./lib/",
+        "./hooks": "./lib/hooks.js",
+        "./contexts": "./lib/contexts.js"
     },
     "repository": {
         "type": "git",
@@ -86,7 +85,7 @@
         "npm": ">=7"
     },
     "scripts": {
-        "build": "tsc",
+        "build": "webpack --config webpack.babel.ts",
         "prepare": "yarn lint && yarn build",
         "watch": "webpack --watch --config webpack.babel.ts",
         "transpile": "babel src -d lib --copy-files",

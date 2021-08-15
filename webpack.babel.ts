@@ -17,8 +17,8 @@ module.exports = {
         Dropdown: './src/components/Dropdown/index.ts',
         ErrorBoundary: './src/components/ErrorBoundary/index.ts',
         Flex: './src/components/Flex/index.ts',
-        'Go/Back': './src/components/GoBack/index.ts',
-        'Go/Home': './src/components/GoHome/index.ts',
+        GoBack: './src/components/GoBack/index.ts',
+        GoHome: './src/components/GoHome/index.ts',
         Grid: './src/components/Grid/index.ts',
         Gridified: './src/components/Gridified/index.ts',
         Icon: './src/components/Icon/index.ts',
@@ -29,7 +29,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './lib'),
         filename: '[name].js',
-        // libraryTarget: 'commonjs2',
+        libraryTarget: 'commonjs2',
     },
 
     resolve: {
@@ -48,7 +48,7 @@ module.exports = {
             },
             {
                 test: /\.(scss|sass)$/,
-                exclude: /node_modules\/(?!muejs)/,
+                exclude: /node_modules/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
         ],
