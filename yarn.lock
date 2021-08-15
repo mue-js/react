@@ -1045,10 +1045,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
-"@mue-js/sass@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@mue-js/sass/-/sass-1.0.8.tgz#c1a4612fb3a6c675c9a2693ec517d88f846c1203"
-  integrity sha512-C0jUoqTFEkO/+xgeRmDj9PvWCyYWCBhhVeerAp3N+4E3sLj9RCr8pCUvkB9p/JoONER7fumF8P9tUZchliySWQ==
+"@mue-js/sass@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@mue-js/sass/-/sass-1.0.9.tgz#6c047a0a55ac11c2e9c983f9471887754e81f17d"
+  integrity sha512-btr1j1TX8veEOuVy09KC2CIV6gTazcnJRAtYnIeqX2m5AfDG67APvlbY5wrzyuzrVP34z7EPo4bqgtN8YmieaA==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.2":
   version "2.1.8-no-fsevents.2"
