@@ -1,12 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef,
-    useCallback,
-    ReactNode,
-    CSSProperties,
-    FC,
-} from 'react'
+import React, { useState, useEffect, useRef, useCallback, ReactNode, CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { onEscape } from '../../utils/keyboardHandlers'
 
@@ -173,7 +165,7 @@ export function UncatchedModal({
     )
 
     const modalRoot = document.getElementById('modal-root')
-    return modalRoot ? (createPortal(modal, modalRoot) as any) : null
+    return modalRoot ? createPortal(modal, modalRoot) : null
 }
 
 export default function Modal(props: ModalProps) {

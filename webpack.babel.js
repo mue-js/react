@@ -8,7 +8,7 @@ import path from 'path'
 module.exports = {
     mode: 'production',
     entry: {
-        index: './src/index.js',
+        index: './src/index.ts',
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -38,8 +38,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyWebPackPlugin({ patterns: [{ from: './src/index.js' }] }),
-        new webpack.HotModuleReplacementPlugin(),
+        new CopyWebPackPlugin({ patterns: [{ from: './src/index.ts' }] }),
         new MiniCssExtractPlugin({ filename: '[name].css' }),
     ],
     externals: {
