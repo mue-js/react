@@ -5,11 +5,10 @@
     "main": "src/index.ts",
     "exports": {
         ".": "./src/index.ts",
-        "./": "./lib/",
-        "./raw": "./src/components/",
-        "./styles": "./src/styles.ts",
-        "./hooks": "./src/hooks/",
-        "./contexts": "./src/contexts/"
+        "./": "./lib/src/components",
+        "./styles": "./lib/src/styles.ts",
+        "./hooks": "./lib/src/hooks/",
+        "./contexts": "./lib/src/contexts/"
     },
     "repository": {
         "type": "git",
@@ -87,8 +86,8 @@
         "npm": ">=7"
     },
     "scripts": {
-        "build": "rm -rf ./lib/ && tsc",
-        "prepare": "yarn build",
+        "build": "tsc",
+        "prepare": "yarn lint && yarn build",
         "watch": "webpack --watch --config webpack.babel.ts",
         "transpile": "babel src -d lib --copy-files",
         "fix-styles": "prettier-stylelint --write 'src/**/*.{css,scss}' ",

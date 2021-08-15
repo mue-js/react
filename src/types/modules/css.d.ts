@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import * as CSS from 'csstype'
 
 declare module 'csstype' {

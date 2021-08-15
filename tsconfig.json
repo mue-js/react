@@ -1,9 +1,12 @@
 {
     "compilerOptions": {
+        "outDir": "./lib",
         "target": "es5",
-        "lib": ["ES6", "DOM", "DOM.ITERABLE", "ES2016", "ES2017"],
         "jsx": "react",
-        "declaration": true,
+        "module": "commonjs",
+        "removeComments": true,
+        "declaration": false,
+        "sourceMap": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
@@ -16,12 +19,11 @@
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "typeRoots": ["node_modules/@types", "src/types/modules"]
+        "typeRoots": ["node_modules/@types", "src/types/modules/css.d.ts"]
     },
     "include": ["src/types/modules/css.d.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules", "lib"]
