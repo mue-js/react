@@ -5,7 +5,7 @@
     "main": "src/index.ts",
     "exports": {
         ".": "./src/index.ts",
-        "./sass": "./src/sass.ts",
+        "./styles": "./src/styles.ts",
         "./hooks": "./src/hooks/index.ts",
         "./contexts": "./src/contexts/index.ts",
         "./Breadcrumb": "./src/components/Breadcrumb/index.ts",
