@@ -22,7 +22,6 @@ export interface ButtonProps
         ButtonHTMLAttributes<HTMLButtonElement> {
     aspect?: ButtonAspect
     color?: string
-    customColor?: string
     direction?: DirectionType
     iconSide?: IconSide
     icon?: string
@@ -36,12 +35,9 @@ export default function Button({
     aspect = 'filled',
     children,
     color = 'primary',
-    customColor,
     direction = 'bottom',
+    icon = undefined,
     iconSide = 'right',
-    icon = null,
-    padding,
-    size,
     text,
     textClassName,
     type = 'button',
@@ -72,9 +68,10 @@ export default function Button({
         >
             {!children && (
                 <span
-                    className={`flex align-items-center justify-center ${
-                        iconSide === 'left' ? 'flex-reverse' : ''
-                    }`}
+                    className={['flex align-items-center justify-center',
+                        iconSide === 'left' && 'flex-reverse', 
+                        textClassName
+                    ].filter(Boolean).join(' ')}
                 >
                     {text}
 

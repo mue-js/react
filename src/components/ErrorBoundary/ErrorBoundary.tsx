@@ -21,15 +21,27 @@ export interface ErrorBoundaryProps extends ErrorMessageProps {
 export class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
     public state: State = { error: undefined, errorInfo: undefined }
 
-    componentDidCatch = (error: Error, errorInfo: ErrorInfo) => catchFunc(error, errorInfo, this)
+    componentDidCatch = (error: Error, errorInfo: ErrorInfo) => this.catchFunc(error, errorInfo)
 
     render() {
         const { children } = this.props
         if (this.state.errorInfo) {
-            return handleError(this)
+            return this.handleError()
         }
         // Normally, just render children
         return typeof children === 'function' ? children() : children
+    }
+
+    handleError() {
+        const { error = undefined, errorInfo = undefined } = this.state || {}
+        return <ErrorMessage {...this.props} error={error} errorInfo={errorInfo} />
+    }
+
+    catchFunc(error: Error, errorInfo: ErrorInfo) {
+        this.setState({
+            error: error,
+            errorInfo: errorInfo,
+        })
     }
 }
 
@@ -52,25 +64,11 @@ export function ErrorMessage({
             {showDetails && (
                 <details className="error-details" style={{ whiteSpace: 'pre-wrap' }}>
                     <div className="text-error font-18">{error && error.toString()}</div>
-                    <div>{errorInfo.componentStack}</div>
+                    <div>{errorInfo?.componentStack}</div>
                 </details>
             )}
         </div>
     )
-}
-
-export const catchFunc = (error: Error, errorInfo: ErrorInfo, context: any) => {
-    // catch errors in any components below and re-render with error message
-    context.setState({
-        error: error,
-        errorInfo: errorInfo,
-    })
-    // log error messages, etc.
-}
-
-export function handleError({ props, state }: any) {
-    const { error = null, errorInfo = null } = state || {}
-    return <ErrorMessage {...props} error={error} errorInfo={errorInfo} />
 }
 
 export default ErrorBoundary

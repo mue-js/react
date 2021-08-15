@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react'
+
 import type { ResponsiveOrValue } from '../../types'
 
 interface HandlerProps {
@@ -17,7 +19,7 @@ function handleReponsiveOrValue({ value, size }: HandlerProps) {
 }
 
 export interface GetStyleProps {
-    style: object
+    style: CSSProperties
     columnsTemplate: ResponsiveOrValue
     rowsTemplate: ResponsiveOrValue
     gap: ResponsiveOrValue

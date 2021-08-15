@@ -1,27 +1,53 @@
-@import 'muejs/src/base/_fonts.scss';
-@import 'muejs/src/mixins/mediaQueries.scss';
+@import '~@mue-js/sass/fonts';
+@import '~@mue-js/sass/mediaQueries';
 
 :root {
     --border-size: 1px;
     --btn-padding-v: 12px;
     --btn-padding-h: 32px;
-
     --primary-shadow: rgba(242, 46, 46, 0.3);
     --secondary-shadow: rgba(242, 183, 5, 0.3);
     --dark-shadow: rgba(92, 92, 92, 0.3);
-
     --primary-border-shadow: rgba(242, 46, 46, 0.15);
     --secondary-border-shadow: rgba(242, 183, 5, 0.15);
     --dark-border-shadow: rgba(92, 92, 92, 0.15);
 }
+
 .dark-mode {
     --primary-shadow: rgba(135, 135, 135, 0.3);
     --secondary-shadow: rgba(135, 135, 135, 0.3);
     --dark-shadow: rgba(135, 135, 135, 0.3);
-
     --primary-border-shadow: rgba(135, 135, 135, 0.15);
     --secondary-border-shadow: rgba(135, 135, 135, 0.15);
     --dark-border-shadow: rgba(135, 135, 135, 0.15);
+
+    .btn-primary,
+    .btn-secondary {
+        --sub-bg: var(--grey-10);
+    }
+
+    .btn-light-primary,
+    .btn-light-secondary {
+        --sub-bg: var(--light-10);
+    }
+}
+
+@mixin button {
+    @include rubik;
+    @include bold;
+
+    align-items: center;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+    display: flex;
+    font-size: 13px;
+    height: var(--btn-height, inherit);
+    justify-content: center;
+    letter-spacing: 0;
+    line-height: 24px;
+    padding: var(--btn-padding-v) var(--btn-padding-h);
+    width: auto;
 }
 
 @include withMediaQueries(to-bottom) {
@@ -57,17 +83,15 @@
     );
     background-position: var(--btn-bg-position, 0% calc(100% + var(--border-size, 2px)));
     background-size: var(--btn-bg-size, 100% calc(200% + 3 * var(--border-size, 2px)));
-
     border: var(--border-size) solid var(--bg, var(--primary-color));
     box-shadow: var(--box-shadow, 0);
-
     overflow: hidden;
     position: relative;
-
     transition: background-position 0.3s, color 0.3s, box-shadow 0.3s;
 
     &:hover:not(:disabled):not(.disabled) {
         --color: var(--hovered-text, var(--bg, var(--primary-color)));
+
         background-position: var(--btn-bg-position-2, 0% 0%);
     }
 }
@@ -82,7 +106,6 @@
     background-size: var(--btn-bg-size, 100% calc(200% + 3 * var(--border-size, 2px)));
     border: var(--border-size, 2px) solid var(--border, var(--primary-color));
     box-shadow: var(--box-shadow, 0);
-
     overflow: hidden;
     position: relative;
 
@@ -92,6 +115,7 @@
 
     &:hover:not(:disabled):not(.disabled) {
         --color: var(--hovered-text, var(--pale-color, #fff));
+
         background-position: var(--btn-bg-position, 0% 0%);
     }
 }
@@ -105,6 +129,7 @@ button {
     &:disabled,
     &.disabled {
         --box-shadow: none;
+
         box-shadow: none;
         cursor: not-allowed !important;
         opacity: var(--disabled-opacity);
@@ -112,6 +137,8 @@ button {
 }
 
 .button {
+    @include button;
+
     max-height: 50px;
 
     > i,
@@ -129,6 +156,7 @@ button {
 
 .btn-with-icon {
     --btn-padding-h: 24px;
+
     &.icon-left {
         i,
         svg {
@@ -149,39 +177,20 @@ button {
     --btn-height: 40px;
 }
 
-@mixin button {
-    @include rubik;
-    @include bold;
-
-    align-items: center;
-    border: 0;
-    border-radius: 9px;
-    cursor: pointer;
-    display: flex;
-    font-size: 13px;
-    height: var(--btn-height, inherit);
-    justify-content: center;
-    letter-spacing: 0;
-    line-height: 24px;
-    padding: var(--btn-padding-v) var(--btn-padding-h);
-    width: auto;
-}
-
-.button {
-    @include button;
-}
-
 .sub-bg-transparent {
     --sub-bg: transparent !important;
 }
+
 .sub-bg-pale {
     --sub-bg: var(--pale) !important;
 }
+
 .sub-bg-bg-color {
     --sub-bg: var(--bg-color) !important;
 }
 
 // BTN FILLED
+
 @mixin btn-filled {
     @include button;
     @include filled;
@@ -279,18 +288,8 @@ button {
     @include btn-filled;
 }
 
-.dark-mode {
-    .btn-primary,
-    .btn-secondary {
-        --sub-bg: var(--grey-10);
-    }
-    .btn-light-primary,
-    .btn-light-secondary {
-        --sub-bg: var(--light-10);
-    }
-}
-
 // BTN BORDER
+
 @mixin btn-border {
     --bg: transparent;
     @include button;
@@ -386,6 +385,7 @@ button {
 }
 
 // BTN TEXT
+
 @mixin text {
     align-items: center;
     background: unset;
@@ -399,8 +399,8 @@ button {
     box-shadow: unset;
     position: relative;
 
-    &:before,
-    &:after {
+    &::before,
+    &::after {
         border-bottom-width: 1px;
         border-color: currentColor;
         border-style: solid;
@@ -412,7 +412,8 @@ button {
         transition: height 0.2s, width 0.3s;
         transition-delay: 0s, 0.2s;
     }
-    &:before {
+
+    &::before {
         border-bottom-left-radius: 9px;
         border-left-width: 1px;
         border-right-width: 0;
@@ -420,7 +421,8 @@ button {
         width: 15%;
         overflow-x: hidden;
     }
-    &:after {
+
+    &::after {
         border-bottom-right-radius: 9px;
         border-left-width: 0;
         border-right-width: 1px;
@@ -430,8 +432,8 @@ button {
     }
 
     &:hover {
-        &:before,
-        &:after {
+        &::before,
+        &::after {
             height: 35%;
             transition-delay: 0.2s, 0s;
             width: 50%;
@@ -444,6 +446,7 @@ button {
 }
 
 // BTN TEXT
+
 @mixin btn-text {
     --bg: transparent;
     @include button;

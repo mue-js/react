@@ -2,13 +2,18 @@ import React, { createContext, useState } from 'react'
 import { WithChildren } from '../../types'
 
 // output
+type DarkModeContextOutput = [boolean | null, () => void, (bool: boolean) => void]
 
 // input
 interface WrapperProps extends WithChildren {
-    initialState: boolean | null
+    initialState: boolean
 }
 
-export const DarkModeContext = createContext([false, () => null, bool => null])
+export const DarkModeContext = createContext<DarkModeContextOutput>([
+    false,
+    () => undefined,
+    () => undefined,
+])
 export default DarkModeContext
 
 export const DarkModeConsumer = DarkModeContext.Consumer
@@ -16,22 +21,22 @@ export const DarkModeConsumer = DarkModeContext.Consumer
 const darkModeInLS = localStorage.getItem('darkMode') ?? ''
 
 export function DarkModeProvider({
-    initialState = darkModeInLS === 'true' ?? null,
+    initialState = darkModeInLS === 'true' ?? false,
     children,
 }: WrapperProps) {
-    const [darkMode, _setDarkMode] = useState<boolean | null>(initialState)
+    const [darkMode, _setDarkMode] = useState<boolean>(initialState)
 
-    function setDarkMode(value) {
+    function setDarkMode(value: boolean): void {
         _setDarkMode(!!value)
         localStorage.setItem('darkMode', `${!!value}`)
     }
 
-    function switchDarkMode() {
+    function switchDarkMode(): void {
         setDarkMode(!darkMode)
     }
 
     return (
-        <DarkModeContext.Provider value={[darkMode, switchDarkMode, setDarkMode]}>
+        <DarkModeContext.Provider value={[darkMode ?? false, switchDarkMode, setDarkMode]}>
             {children}
         </DarkModeContext.Provider>
     )

@@ -1,3 +1,25 @@
 {
-  "extends": ["next", "next/core-web-vitals", "prettier", "plugin:jsx-a11y/recommended"]
+    "extends": ["plugin:@typescript-eslint/recommended", "prettier", "plugin:jsx-a11y/recommended"],
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "es6": true
+    },
+    "rules": {
+        "semi": ["error", "never"],
+        "no-console": "off",
+        "func-names": "off",
+        "no-process-exit": "off",
+        "object-shorthand": "off",
+        "no-unused-vars": "off",
+
+        "@typescript-eslint/no-unused-vars": ["warn"],
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+
+        "prettier/prettier": "off",
+
+        "react/jsx-filename-extension": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "react-hooks/exhaustive-deps": "off"
+    }
 }

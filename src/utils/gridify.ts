@@ -4,8 +4,8 @@ import type { ResponsiveOrValue } from './../types'
 export interface GetCSSVarForDimensionProps {
     dimension: ResponsiveOrValue
     size: string
-    defaultValue: string
-    getPrefix: (dim: string | number) => string
+    defaultValue: string | number
+    getPrefix?: (dim: string | number) => false | string
 }
 
 export const getCSSVarForDimension = memoize(
@@ -13,7 +13,7 @@ export const getCSSVarForDimension = memoize(
         dimension,
         size,
         defaultValue,
-        getPrefix = () => undefined,
+        getPrefix = () => '',
     }: GetCSSVarForDimensionProps) => {
         if (dimension instanceof Object) {
             const dimensionForSize = dimension?.[size]

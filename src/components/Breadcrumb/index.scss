@@ -6,18 +6,7 @@
     --step-color: var(--dark-color);
     --step-current-color: var(--primary-color);
     --step-passed-color: var(--primary-color);
-}
-.dark-mode .breadcrumb {
-    --breadcrumb-bg: var(--primary-color);
-    --breadcrumb-filled-border: var(--pale-color);
-    --breadcrumb-empty-border: var(--dark-color);
-    // text-colors
-    --step-color: var(--dark-color);
-    --step-current-color: var(--pale-color);
-    --step-passed-color: var(--pale-color);
-}
 
-.breadcrumb {
     background-color: var(--breadcrumb-bg);
 
     .border {
@@ -46,4 +35,14 @@
             }
         }
     }
+}
+
+.dark-mode .breadcrumb {
+    --breadcrumb-bg: var(--primary-color);
+    --breadcrumb-filled-border: var(--pale-color);
+    --breadcrumb-empty-border: var(--dark-color);
+    // text-colors
+    --step-color: var(--dark-color);
+    --step-current-color: var(--pale-color);
+    --step-passed-color: var(--pale-color);
 }

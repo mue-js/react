@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, ReactNode, CSSProperties } from 'react'
+import React, { ReactPortal, useState, useEffect, useRef, useCallback, ReactNode, CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { onEscape } from '../../utils/keyboardHandlers'
 
@@ -48,7 +48,7 @@ export function UncatchedModal({
     onValid = () => undefined,
     onRefuse = () => undefined,
     whileClosing = () => undefined,
-}: ModalProps) {
+}: ModalProps): ReactPortal | null {
     const ref = useRef<HTMLDivElement>(null)
     const [open, _setOpen] = useState(true)
     const [closing, _setClosing] = useState(false)
@@ -86,7 +86,7 @@ export function UncatchedModal({
 
     const escFunction = useCallback(
         (e: KeyboardEvent | React.KeyboardEvent) => onEscape(e, () => close(true)),
-        [],
+        [close],
     )
 
     useEffect(() => {
@@ -108,7 +108,7 @@ export function UncatchedModal({
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
-    }, [])
+    }, [handleClickOutside])
 
     useEffect(() => {
         if (open) {
@@ -129,7 +129,8 @@ export function UncatchedModal({
                 document.body.classList.toggle('modal-open', true)
             }
         }
-    }, [open, closing])
+        return
+    }, [open, closing, onClose, animationDuration])
 
     if (!open) return null
 
@@ -157,7 +158,7 @@ export function UncatchedModal({
                     ?.filter(e => !!e)
                     .join(' ')}
                 ref={ref}
-                style={style}
+                style={{ '--animation-duration': animationDuration, ...style }}
             >
                 {typeof children === 'function' ? children({ close, valid, refuse }) : children}
             </div>

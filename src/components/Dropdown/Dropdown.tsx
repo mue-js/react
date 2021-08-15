@@ -1,5 +1,4 @@
-import React, { FC, ReactNode, useState, useEffect, useRef } from 'react'
-import { DropdownTagsType } from '../../types'
+import React, { FC, ReactNode, useState, useEffect, useRef, CSSProperties } from 'react'
 
 export interface DropdownChildrenProps {
     close: () => void
@@ -12,14 +11,13 @@ export interface DropdownTriggerProps {
 }
 
 export interface DropdownProps {
-    tag?: DropdownTagsType
     role?: string
     trigger: FC<DropdownTriggerProps>
     children?: ReactNode
-    content?: any
+    content?: number | string | ReactNode
     direction?: string
-    style?: object
-    contentStyle?: object
+    style?: CSSProperties
+    contentStyle?: CSSProperties
     className?: string
     containerClassName?: string
     contentClassName?: string
@@ -31,8 +29,7 @@ export interface DropdownProps {
     onClose?: () => void
 }
 
-const Dropdown: FC<DropdownProps> = ({
-    tag: Tag = 'div',
+export default function Dropdown({
     role,
     trigger,
     content,
@@ -49,8 +46,8 @@ const Dropdown: FC<DropdownProps> = ({
     onClick = () => undefined,
     onOpen = () => undefined,
     onClose = () => undefined,
-}) => {
-    const ref = useRef<any>(null)
+}: DropdownProps) {
+    const ref = useRef<HTMLDivElement>(null)
     const [isOpen, _setOpen] = useState(false)
     const isOpenRef = useRef(isOpen)
 
@@ -78,12 +75,7 @@ const Dropdown: FC<DropdownProps> = ({
         if (disabled) return null
         isOpen ? close() : open()
         onClick()
-    }
-
-    const handleSpace = (e: KeyboardEvent | React.KeyboardEvent) => {
-        if (disabled) return null
-        isOpen ? close() : open()
-        onClick()
+        return null
     }
 
     const escFunction = (e: KeyboardEvent) => {
@@ -113,7 +105,7 @@ const Dropdown: FC<DropdownProps> = ({
     }, [])
 
     return (
-        <Tag
+        <div
             role={role}
             className={[containerClassName, 'dropdown-container', invisible && 'invisible']
                 .filter(Boolean)
@@ -144,8 +136,6 @@ const Dropdown: FC<DropdownProps> = ({
                     {typeof children === 'function' ? children({ close }) : children}
                 </div>
             )}
-        </Tag>
+        </div>
     )
 }
-
-export default Dropdown

@@ -1,7 +1,9 @@
 import { TOP, LEFT, RIGHT, BOTTOM } from '../../enum'
 import type { DirectionType } from '../../types'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FuncPropAny = (v: any) => void
+
 export type FuncPropBool = (bool: boolean) => void
 export type FuncNoProp = () => void
 

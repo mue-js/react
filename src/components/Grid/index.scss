@@ -1,4 +1,4 @@
-@import 'muejs/src/mixins/mediaQueries.scss';
+@import '~@mue-js/sass/mediaQueries';
 
 .grid {
     grid-auto-flow: row;
@@ -13,7 +13,7 @@
     grid-column-gap: var(--col-gap);
     grid-row-gap: var(--row-gap);
 
-    @media (min-width: $tablet-min) {
+    @media (min-width: $_tablet-min) {
         --template-columns-sm: var(--template-columns);
         --template-rows-sm: var(--template-rows);
         --col-gap-sm: var(--col-gap);
@@ -25,7 +25,7 @@
         grid-row-gap: var(--row-gap-sm);
     }
 
-    @media (min-width: $md-screen-min) {
+    @media (min-width: $_md-screen-min) {
         --template-columns-md: var(--template-columns-sm);
         --template-rows-md: var(--template-rows-sm);
         --col-gap-md: var(--col-gap-sm);
@@ -37,7 +37,7 @@
         grid-row-gap: var(--row-gap-md);
     }
 
-    @media (min-width: $lg-screen-min) {
+    @media (min-width: $_lg-screen-min) {
         --template-columns-lg: var(--template-columns-md);
         --template-rows-lg: var(--template-rows-md);
         --col-gap-lg: var(--col-gap-md);
@@ -49,7 +49,7 @@
         grid-row-gap: var(--row-gap-lg);
     }
 
-    @media (min-width: $xl-screen-min) {
+    @media (min-width: $_xl-screen-min) {
         --template-columns-xl: var(--template-columns-lg);
         --template-rows-xl: var(--template-rows-lg);
         --col-gap-xl: var(--col-gap-lg);
@@ -61,7 +61,7 @@
         grid-row-gap: var(--row-gap-xl);
     }
 
-    @media (min-width: $xxl-screen-min) {
+    @media (min-width: $_xxl-screen-min) {
         --template-columns-xxl: var(--template-columns-xl);
         --template-rows-xxl: var(--template-rows-xl);
         --col-gap-xxl: var(--col-gap-xl);
@@ -78,6 +78,7 @@
         --row: auto;
         --width: span 1;
         --height: span 1;
+
         grid-row: var(--row) / var(--height);
         grid-column: var(--col) / var(--width);
 
@@ -141,6 +142,7 @@
             grid-column: var(--col-xxxl) / var(--width-xxxl);
         }
     }
+
     .container {
         justify-self: center;
         min-width: 80%;
@@ -151,17 +153,17 @@
     grid-auto-flow: column;
 }
 
-@for $gap from 1 through 10 {
-    .gap-column-#{$gap} {
-        grid-column-gap: #{$gap}px;
+@for $_gap from 1 through 10 {
+    .gap-column-#{$_gap} {
+        grid-column-gap: #{$_gap}px;
     }
-    .gap-column-#{$gap}\% {
-        grid-column-gap: $gap * 1%;
+    .gap-column-#{$_gap}\% {
+        grid-column-gap: $_gap * 1%;
     }
-    .gap-column-#{$gap}vw {
-        grid-column-gap: #{$gap}vw;
+    .gap-column-#{$_gap}vw {
+        grid-column-gap: #{$_gap}vw;
     }
-    .gap-column-#{$gap}vh {
-        grid-column-gap: #{$gap}vh;
+    .gap-column-#{$_gap}vh {
+        grid-column-gap: #{$_gap}vh;
     }
 }

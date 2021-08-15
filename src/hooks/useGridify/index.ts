@@ -30,7 +30,7 @@ export interface GridifyProps {
 export interface ReturnProps {
     className: string
     hide: boolean
-    style: object
+    style: CSSProperties
     col?: ResponsiveOrValue
     row?: ResponsiveOrValue
     width?: ResponsiveOrValue
@@ -72,15 +72,15 @@ function useGridify({
     ) {
         styles['display'] = 'none'
     } else {
-        ;['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'].forEach(size => {
+        ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'].forEach(size => {
             const suffix = size !== 'xs' ? `-${size}` : ''
 
-            styles[`--col${suffix}`] = getCSSVarForDimension({
+            styles[`--col${suffix}`] = col && getCSSVarForDimension({
                 dimension: col,
                 size,
                 defaultValue: 'auto',
             })
-            styles[`--row${suffix}`] = getCSSVarForDimension({
+            styles[`--row${suffix}`] = row && getCSSVarForDimension({
                 dimension: row,
                 size,
                 defaultValue: 'auto',
@@ -101,7 +101,7 @@ function useGridify({
     }
 
     return {
-        hide: !(show ?? true) || hide,
+        hide: !(show ?? true) || (hide ?? false),
 
         className: [
             camelToKebab(type),

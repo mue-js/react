@@ -1,4 +1,4 @@
-import * as CSS from 'csstype'
+// import * as CSS from 'csstype'
 
 declare module 'csstype' {
     interface Properties {
@@ -6,6 +6,6 @@ declare module 'csstype' {
         WebkitRocketLauncher?: string
 
         // ...or allow any other property
-        [index: string]: any
+        [index: string]: string | number | Properties
     }
 }
