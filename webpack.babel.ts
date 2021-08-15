@@ -8,7 +8,6 @@ module.exports = {
     mode: 'production',
     entry: {
         index: './src/index.ts',
-        // styles: './src/styles.ts',
         hooks: './src/hooks/index.ts',
         contexts: './src/contexts/index.ts',
         Breadcrumb: './src/components/Breadcrumb/index.ts',
@@ -55,6 +54,17 @@ module.exports = {
     },
     plugins: [new CleanWebpackPlugin(), new MiniCssExtractPlugin({ filename: '[name].css' })],
     externals: {
-        react: 'commonjs2 react',
+        react: {
+            root: 'React',
+            commonjs2: 'react',
+            commonjs: 'react',
+            amd: 'react',
+        },
+        'react-dom': {
+            root: 'ReactDOM',
+            commonjs2: 'react-dom',
+            commonjs: 'react-dom',
+            amd: 'react-dom',
+        },
     },
 }

@@ -1,11 +1,12 @@
 {
     "name": "@mue-js/react",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
-    "main": "lib/index.js",
+    "main": "lib/index/index.js",
     "exports": {
         ".": "./lib/index.js",
         "./": "./lib/",
+        "./raw": "./src/components/",
         "./hooks": "./lib/hooks.js",
         "./contexts": "./lib/contexts.js"
     },
