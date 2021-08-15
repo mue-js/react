@@ -1,2 +1,13 @@
 !lib
 lib/**/*.LICENSE.txt
+
+src
+.gitignore
+.eslintrc
+.prettierrc
+.stylelintrc.json
+babel.config.js
+webpack.babel.ts
+tsconfig.json
+yarn-error.log
+yarn.lock
