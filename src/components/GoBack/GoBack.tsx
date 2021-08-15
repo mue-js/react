@@ -9,12 +9,13 @@ import Link from '../Link'
 export interface GoBackProps extends GridifyProps {
     btnClass?: string
     containerClassName?: string
+    to?: string,
     style?: CSSProperties
     label?: string
     history: History
 }
 
-export default function GoBack({ style, to, label, history, ...rest }) {
+export default function GoBack({ style, to, label, history, ...rest }: GoBackProps) {
     function handleClick() {
         if (history?.goBack) {
             history.goBack()

@@ -13,7 +13,7 @@ interface Step {
 }
 
 export interface BreacrumbProps extends WithChildren {
-    history: History
+    history?: History
     className?: string
     steps: Step[]
     step: string
@@ -22,12 +22,12 @@ export interface BreacrumbProps extends WithChildren {
 }
 
 export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }: BreacrumbProps) {
-    const entries = steps instanceof Object && Object.entries(steps)
+    if (!(steps instanceof Object)) return null
 
+    const entries = Object.entries(steps)
     if (!entries?.length) return null
 
     const currentId = entries?.find(([id, { key }]) => [id, key]?.includes(step))?.[0]
-
     const lastStepId = entries?.[entries?.length - 1]?.[0]
 
     const percentPerStep = 100 / entries.length
@@ -36,10 +36,9 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
     if (currentId === lastStepId) {
         percent = 100
     } else {
-        percent += percentPerStep * (parseInt(currentId, 10) - 1)
+        percent += percentPerStep * (parseInt(currentId || '', 10) - 1)
     }
 
-    let Tag = url ? Link : 'div'
 
     return (
         <>
@@ -54,21 +53,12 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
                             if (!breadcrumb) return null
 
                             const placement = Math.sign(
-                                parseInt(stepId, 10) - parseInt(currentId, 10),
+                                parseInt(stepId, 10) - parseInt(currentId || '', 10),
                             )
 
-                            if (parseInt(stepId, 10) > parseInt(`${noLinkAfterId}`, 10)) {
-                                Tag = 'div'
-                            }
-
-                            return (
-                                <Tag
-                                    key={stepId}
-                                    to={Tag === Link && `/${url}/${key || stepId}`}
-                                    className="step pt-20"
-                                    history={Tag === Link && history}
-                                >
-                                    <span
+                            const content = (
+                                <>
+                                <span
                                         className={`body-14 mr-4 ${
                                             placement <= 0 ? 'step-passed bold' : 'medium'
                                         }`}
@@ -82,7 +72,27 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
                                     >
                                         - {breadcrumb}
                                     </span>
-                                </Tag>
+                                </>
+                            )
+
+                            const isLink = url && parseInt(stepId, 10) > parseInt(`${noLinkAfterId}`, 10)
+
+                            return isLink && history ? (
+                                <Link
+                                    key={stepId}
+                                    to={`/${url}/${key || stepId}`}
+                                    className="step pt-20"
+                                    history={history}
+                                >
+                                    {content}
+                                </Link>
+                            ) : (
+                                <div
+                                    key={stepId}
+                                    className="step pt-20"
+                                >
+                                    {content}
+                                </div>
                             )
                         })
                         ?.filter(Boolean)}

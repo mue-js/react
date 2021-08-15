@@ -87,7 +87,8 @@
         "npm": ">=7"
     },
     "scripts": {
-        "build": "webpack --config webpack.babel.ts",
+        "build": "rm -rf ./lib/ && tsc",
+        "prepare": "yarn build",
         "watch": "webpack --watch --config webpack.babel.ts",
         "transpile": "babel src -d lib --copy-files",
         "fix-styles": "prettier-stylelint --write 'src/**/*.{css,scss}' ",
