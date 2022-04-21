@@ -36,9 +36,8 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
     if (currentId === lastStepId) {
         percent = 100
     } else {
-        percent += percentPerStep * (parseInt(currentId || '', 10) - 1)
+        percent += percentPerStep * (parseInt(currentId || '', 10) - 1)
     }
-
 
     return (
         <>
@@ -53,12 +52,12 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
                             if (!breadcrumb) return null
 
                             const placement = Math.sign(
-                                parseInt(stepId, 10) - parseInt(currentId || '', 10),
+                                parseInt(stepId, 10) - parseInt(currentId || '', 10),
                             )
 
                             const content = (
                                 <>
-                                <span
+                                    <span
                                         className={`body-14 mr-4 ${
                                             placement <= 0 ? 'step-passed bold' : 'medium'
                                         }`}
@@ -75,7 +74,8 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
                                 </>
                             )
 
-                            const isLink = url && parseInt(stepId, 10) > parseInt(`${noLinkAfterId}`, 10)
+                            const isLink =
+                                url && parseInt(stepId, 10) > parseInt(`${noLinkAfterId}`, 10)
 
                             return isLink && history ? (
                                 <Link
@@ -87,10 +87,7 @@ export default function Breadcrumb({ url, step, steps, noLinkAfterId, history }:
                                     {content}
                                 </Link>
                             ) : (
-                                <div
-                                    key={stepId}
-                                    className="step pt-20"
-                                >
+                                <div key={stepId} className="step pt-20">
                                     {content}
                                 </div>
                             )

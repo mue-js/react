@@ -1,13 +1,11 @@
 {
     "name": "@mue-js/react",
-    "version": "1.0.14",
+    "version": "1.1.0",
     "description": "A not professional React package. It'll help you to easily make grids and recurrent components, for sure.",
     "main": "lib/index/index.js",
     "exports": {
-        ".": "./lib/index.js",
-        "./": "./lib/",
-        "./raw": "./src/components/",
-        "./hooks": "./lib/hooks.js",
+        ".": "./lib/components/",
+        "./hooks": "./lib/hooks/index.js",
         "./contexts": "./lib/contexts.js"
     },
     "repository": {
@@ -26,10 +24,6 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.yarnpkg.com"
-    },
-    "dependencies": {
-        "@mue-js/sass": "^1.0.9",
-        "lodash.memoize": "^4.1.2"
     },
     "peerDependencies": {
         "@mue-js/sass": "^1.0.8",
@@ -86,8 +80,9 @@
         "npm": ">=7"
     },
     "scripts": {
+        "ts": "rm -rf lib && yarn tsc",
         "build": "webpack --config webpack.babel.ts",
-        "prepare": "yarn lint && yarn build",
+        "prepare": "yarn ts && yarn lint",
         "watch": "webpack --watch --config webpack.babel.ts",
         "transpile": "babel src -d lib --copy-files",
         "fix-styles": "prettier-stylelint --write 'src/**/*.{css,scss}' ",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 // types
 import type { CSSProperties } from 'react'
 import type { ResponsiveOrValue } from '../../types'
@@ -37,7 +37,7 @@ export interface ReturnProps extends TransmissibleProps {
     style: CSSProperties
 }
 
-function useGridify({
+export function useGridify({
     col: defaultCol,
     row: defaultRow,
     width = 1,
@@ -61,6 +61,8 @@ function useGridify({
 
     const col = position === 'fixed' ? 0 : defaultCol
     const row = position === 'fixed' ? 0 : defaultRow
+
+    const getCSSVar = useCallback(props => getCSSVarForDimension(props), [])
 
     useEffect(() => {
         setClassName(
@@ -92,29 +94,29 @@ function useGridify({
 
                 styles[`--col${suffix}`] =
                     col &&
-                    getCSSVarForDimension({
+                    getCSSVar({
                         dimension: col,
                         size,
                         defaultValue: 'auto',
                     })
                 styles[`--row${suffix}`] =
                     row &&
-                    getCSSVarForDimension({
+                    getCSSVar({
                         dimension: row,
                         size,
                         defaultValue: 'auto',
                     })
-                styles[`--width${suffix}`] = getCSSVarForDimension({
+                styles[`--width${suffix}`] = getCSSVar({
                     dimension: fullWidth ? -1 : width,
                     size,
                     defaultValue: 1,
-                    getPrefix: wdth => wdth >= 0 && 'span ',
+                    getPrefix: (w: number) => w >= 0 && 'span ',
                 })
-                styles[`--height${suffix}`] = getCSSVarForDimension({
+                styles[`--height${suffix}`] = getCSSVar({
                     dimension: fullHeight ? -1 : height,
                     size,
                     defaultValue: 1,
-                    getPrefix: hght => hght >= 0 && 'span ',
+                    getPrefix: (h: number) => h >= 0 && 'span ',
                 })
             })
         }

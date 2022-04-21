@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 import { WithChildren } from '../../types'
 
 // output
@@ -40,4 +40,8 @@ export function DarkModeProvider({
             {children}
         </DarkModeContext.Provider>
     )
+}
+
+export function useDarkModeContext() {
+    return useContext<DarkModeContextOutput>(DarkModeContext)
 }

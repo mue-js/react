@@ -1,4 +1,12 @@
-import React, { ReactPortal, useState, useEffect, useRef, useCallback, ReactNode, CSSProperties } from 'react'
+import React, {
+    ReactPortal,
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+    ReactNode,
+    CSSProperties,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { onEscape } from '../../utils/keyboardHandlers'
 
@@ -48,7 +56,7 @@ export function UncatchedModal({
     onValid = () => undefined,
     onRefuse = () => undefined,
     whileClosing = () => undefined,
-}: ModalProps): ReactPortal | null {
+}: ModalProps): ReactPortal | null {
     const ref = useRef<HTMLDivElement>(null)
     const [open, _setOpen] = useState(true)
     const [closing, _setClosing] = useState(false)

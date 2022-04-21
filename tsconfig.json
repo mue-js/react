@@ -5,7 +5,7 @@
         "jsx": "react",
         "module": "commonjs",
         "removeComments": true,
-        "declaration": false,
+        "declaration": true,
         "sourceMap": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
@@ -25,6 +25,6 @@
         "isolatedModules": true,
         "typeRoots": ["node_modules/@types", "src/types/modules/css.d.ts"]
     },
-    "include": ["src/types/modules/css.d.ts", "**/*.ts", "**/*.tsx"],
-    "exclude": ["node_modules", "lib"]
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "exclude": ["node_modules"]
 }

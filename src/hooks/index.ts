@@ -1,3 +1,3 @@
-export * from './useArray'
-export * from './useDarkMode'
-export * from './useGridify'
+export { useArray } from './useArray'
+export { useGridify } from './useGridify'
+export type { GridifyProps, TransmissibleProps, ReturnProps } from './useGridify'
