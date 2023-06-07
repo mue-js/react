@@ -1,4 +1,3 @@
-import React from 'react'
 // types
 import type { WithChildren } from '../../types'
 
@@ -10,6 +9,7 @@ import { getStyle, GetStyleProps } from './static'
 
 // sass
 import './index.scss'
+import { cN } from '../../utils/classNames'
 
 export interface GridProps extends WithChildren, GetStyleProps {
     className: string
@@ -17,11 +17,8 @@ export interface GridProps extends WithChildren, GetStyleProps {
 
 export function UncatchedGrid({ className, children, ...rest }: GridProps) {
     return (
-        <div
-            className={['grid', className].filter(Boolean).join(' ')}
-            style={getStyle(rest as GetStyleProps)}
-        >
-            {typeof children === 'function' ? children() : children}
+        <div className={cN(['grid', className])} style={getStyle(rest as GetStyleProps)}>
+            {children}
         </div>
     )
 }

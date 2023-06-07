@@ -1,5 +1,3 @@
-import React from 'react'
-
 // types
 import type { WithChildren } from '../../types'
 import { MATERIAL_TYPES } from '../../enum'
@@ -12,6 +10,7 @@ import { camelToSnake } from '../../utils/stringFormat'
 
 // sass
 import './index.scss'
+import { cN } from '../../utils/classNames'
 
 export type IconTypes = 'outlined' | 'two-tone' | 'round' | 'sharp'
 export interface IconProps extends WithChildren, GridifyProps {
@@ -21,31 +20,20 @@ export interface IconProps extends WithChildren, GridifyProps {
     svg?: boolean
 }
 
-export default function Icon({
-    children,
-    icon,
-    iconType = 'round',
-    size,
-    svg = false,
-    ...rest
-}: IconProps) {
+export default function Icon({ icon, iconType = 'round', size, svg = false, ...rest }: IconProps) {
     const { className, ...props } = useGridify({
         componentName: 'Icon',
         ...rest,
     })
 
-    const iconFormatted = camelToSnake(
-        icon || (typeof children === 'function' ? children() : children),
-    )
+    const iconFormatted = icon && camelToSnake(icon)
 
-    const classNames = [
+    const classNames = cN([
         className,
         `material-icons${MATERIAL_TYPES.includes(iconType) ? `-${iconType}` : ''}`,
         svg && iconFormatted,
         size,
-    ]
-        .filter(Boolean)
-        .join(' ')
+    ])
 
     return (
         <i className={classNames} {...props}>

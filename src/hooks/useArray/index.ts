@@ -9,14 +9,14 @@ export interface ActionsType<T> {
     add: (a: T & TypeWithId) => void
     unshift: (a: T & TypeWithId) => void
     push: (a: T & TypeWithId) => void
-    move: (from: T & TypeWithId, to: T & TypeWithId) => void
+    move: (from: number, to: number) => void
     clear: () => void
     removeBy: (value: T & TypeWithId, prop: T & TypeWithId) => void
-    removeById: (id: T & TypeWithId) => void
-    removeIndex: (index: T & TypeWithId) => void
+    removeById: (id: number | string) => void
+    removeIndex: (index: number) => void
     pop: () => void
     shift: () => void
-    modifyById: (id: T & TypeWithId, newValue: T & TypeWithId) => void
+    modifyById: (id: number | string, newValue: T & TypeWithId) => void
 }
 
 export function useArray<T>(
@@ -24,17 +24,18 @@ export function useArray<T>(
 ): [(T & TypeWithId)[], ActionsType<T & TypeWithId>] {
     const [value, setValue] = useState(initial)
 
-    const push = useCallback(a => {
+    const push = useCallback((a: (T & TypeWithId) | (T & TypeWithId)[]) => {
         setValue((arr: (T & TypeWithId)[]) => [...arr, ...(Array.isArray(a) ? a : [a])])
     }, [])
     const unshift = useCallback(
-        a => setValue((arr: (T & TypeWithId)[]) => [...(Array.isArray(a) ? a : [a]), ...arr]),
+        (a: (T & TypeWithId) | (T & TypeWithId)[]) =>
+            setValue((arr: (T & TypeWithId)[]) => [...(Array.isArray(a) ? a : [a]), ...arr]),
         [],
     )
     const pop = useCallback(() => setValue((arr: (T & TypeWithId)[]) => arr.slice(0, -1)), [])
     const shift = useCallback(() => setValue((arr: (T & TypeWithId)[]) => arr.slice(1)), [])
     const move = useCallback(
-        (from, to) =>
+        (from: number, to: number) =>
             setValue((arr: (T & TypeWithId)[]) => {
                 const copy = arr.slice()
                 copy.splice(to < 0 ? copy.length + to : to, 0, copy.splice(from, 1)[0])
@@ -44,10 +45,11 @@ export function useArray<T>(
     )
     const clear = useCallback(() => setValue(() => []), [])
     const removeById = useCallback(
-        // @ts-ignore not every array that you will pass down will have object with id field.
-        id =>
+        (id: number | string) =>
             setValue((arr: (T & TypeWithId)[]) =>
-                arr && arr.length ? arr?.filter((v: T & TypeWithId) => v && v.id !== id) : arr,
+                arr && arr.length
+                    ? arr?.filter((v: T & TypeWithId) => v && String(v.id) !== String(id))
+                    : arr,
             ),
         [],
     )
@@ -62,7 +64,7 @@ export function useArray<T>(
         [],
     )
     const removeIndex = useCallback(
-        index =>
+        (index: number) =>
             setValue((arr: (T & TypeWithId)[]) => {
                 const copy = arr.slice()
                 copy.splice(index, 1)
@@ -71,11 +73,13 @@ export function useArray<T>(
         [],
     )
     const modifyById = useCallback(
-        (id, newValue) =>
+        (id: number | string, newValue: T & TypeWithId) =>
             // @ts-ignore not every array that you will pass down will have object with id field.
             setValue((arr: (T & TypeWithId)[]) =>
                 arr.map((item: T & TypeWithId) =>
-                    item.id === id ? Object.assign(Object.assign({}, item), newValue) : item,
+                    String(item.id) === String(id)
+                        ? Object.assign(Object.assign({}, item), newValue)
+                        : item,
                 ),
             ),
         [],

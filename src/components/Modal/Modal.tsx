@@ -15,6 +15,7 @@ import ErrorBoundary from '../ErrorBoundary'
 import { getTranslateAnimation } from './static'
 import type { FuncPropBool, FuncPropAny, FuncNoProp } from './static'
 import { DirectionType } from '../../types'
+import { cN } from '../../utils/classNames'
 
 export interface ModalChildrenProps {
     close: FuncPropBool
@@ -144,27 +145,23 @@ export function UncatchedModal({
 
     const modal = (
         <div
-            className={[
+            className={cN([
                 'modal-bg flex',
                 align,
                 justify,
                 containerClassName,
                 open && (closing ? 'to-opacity-0' : 'to-opacity-100'),
-            ]
-                ?.filter(e => !!e)
-                .join(' ')}
+            ])}
             style={{ '--animation-duration': animationDuration, ...containerStyle }}
         >
             <div
                 id={id}
-                className={[
+                className={cN([
                     'modal flex flex-col rounded-lg w-100%',
                     className,
                     padding,
                     getTranslateAnimation({ open, closing, from }),
-                ]
-                    ?.filter(e => !!e)
-                    .join(' ')}
+                ])}
                 ref={ref}
                 style={{ '--animation-duration': animationDuration, ...style }}
             >

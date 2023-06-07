@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import { Component, ErrorInfo, ReactNode } from 'react'
 
 // hooks
 import useGridify, { GridifyProps } from '../../hooks/useGridify'

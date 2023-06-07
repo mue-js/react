@@ -5,21 +5,21 @@
     --border-size: 1px;
     --btn-padding-v: 12px;
     --btn-padding-h: 32px;
-    --primary-shadow: rgba(242, 46, 46, 0.3);
-    --secondary-shadow: rgba(242, 183, 5, 0.3);
-    --dark-shadow: rgba(92, 92, 92, 0.3);
-    --primary-border-shadow: rgba(242, 46, 46, 0.15);
-    --secondary-border-shadow: rgba(242, 183, 5, 0.15);
-    --dark-border-shadow: rgba(92, 92, 92, 0.15);
+    --primary-shadow: rgb(242 46 46 / 30%);
+    --secondary-shadow: rgb(242 183 5 / 30%);
+    --dark-shadow: rgb(92 92 92 / 30%);
+    --primary-border-shadow: rgb(242 46 46 / 15%);
+    --secondary-border-shadow: rgb(242 183 5 / 15%);
+    --dark-border-shadow: rgb(92 92 92 / 15%);
 }
 
 .dark-mode {
-    --primary-shadow: rgba(135, 135, 135, 0.3);
-    --secondary-shadow: rgba(135, 135, 135, 0.3);
-    --dark-shadow: rgba(135, 135, 135, 0.3);
-    --primary-border-shadow: rgba(135, 135, 135, 0.15);
-    --secondary-border-shadow: rgba(135, 135, 135, 0.15);
-    --dark-border-shadow: rgba(135, 135, 135, 0.15);
+    --primary-shadow: rgb(135 135 135 / 30%);
+    --secondary-shadow: rgb(135 135 135 / 30%);
+    --dark-shadow: rgb(135 135 135 / 30%);
+    --primary-border-shadow: rgb(135 135 135 / 15%);
+    --secondary-border-shadow: rgb(135 135 135 / 15%);
+    --dark-border-shadow: rgb(135 135 135 / 15%);
 
     .btn-primary,
     .btn-secondary {
@@ -189,14 +189,14 @@ button {
     --sub-bg: var(--bg-color) !important;
 }
 
-// BTN FILLED
+/* BTN FILLED */
 
 @mixin btn-filled {
     @include button;
     @include filled;
 }
 
-// PRIMARY
+/* PRIMARY */
 @include withMediaQueries(btn-primary) {
     --bg: var(--primary-color);
     --color: var(--color-over-primary, var(--light-color));
@@ -216,7 +216,7 @@ button {
     @include btn-filled;
 }
 
-// SECONDARY
+/* SECONDARY */
 @include withMediaQueries(btn-secondary) {
     --bg: var(--secondary-color);
     --color: var(--color-over-secondary, var(--light-color));
@@ -236,7 +236,7 @@ button {
     @include btn-filled;
 }
 
-// GREYS
+/* GREYS */
 @include withMediaQueries(btn-black) {
     --bg: var(--black-color);
     --color: var(--pale-color);
@@ -262,7 +262,7 @@ button {
     @include btn-filled;
 }
 
-// OTHERS
+/* OTHERS */
 @include withMediaQueries(btn-info) {
     --bg: var(--info-color);
     --color: var(--pale-color);
@@ -288,7 +288,7 @@ button {
     @include btn-filled;
 }
 
-// BTN BORDER
+/* BTN BORDER */
 
 @mixin btn-border {
     --bg: transparent;
@@ -296,7 +296,7 @@ button {
     @include bordered;
 }
 
-// PRIMARY
+/* PRIMARY */
 @include withMediaQueries(btn-border-primary) {
     --border: var(--primary-color);
     --hovered-text: var(--color-over-primary);
@@ -316,7 +316,7 @@ button {
     @include btn-border;
 }
 
-// SECONDARY
+/* SECONDARY */
 @include withMediaQueries(btn-border-secondary) {
     --border: var(--secondary-color);
     --hovered-text: var(--color-over-secondary);
@@ -336,7 +336,7 @@ button {
     @include btn-border;
 }
 
-// GREYS
+/* GREYS */
 @include withMediaQueries(btn-border-black) {
     --border: var(--black-color);
     --hovered-text: var(--pale-color);
@@ -362,7 +362,7 @@ button {
     @include btn-border;
 }
 
-// OTHERS
+/* OTHERS */
 @include withMediaQueries(btn-border-info) {
     --border: var(--info-color);
     --box-shadow: 0 0 16px 0 var(--dark-shadow);
@@ -384,7 +384,7 @@ button {
     @include btn-border;
 }
 
-// BTN TEXT
+/* BTN TEXT */
 
 @mixin text {
     align-items: center;
@@ -402,7 +402,7 @@ button {
     &::before,
     &::after {
         border-bottom-width: 1px;
-        border-color: currentColor;
+        border-color: currentcolor;
         border-style: solid;
         border-top-width: 0;
         bottom: 0;
@@ -445,7 +445,7 @@ button {
     }
 }
 
-// BTN TEXT
+/* BTN TEXT */
 
 @mixin btn-text {
     --bg: transparent;
@@ -453,7 +453,7 @@ button {
     @include text;
 }
 
-// PRIMARY
+/* PRIMARY */
 @include withMediaQueries(btn-text-primary) {
     --color: var(--primary-color);
     @include btn-text;
@@ -467,7 +467,7 @@ button {
     @include btn-text;
 }
 
-// SECONDARY
+/* SECONDARY */
 @include withMediaQueries(btn-text-secondary) {
     --color: var(--secondary-color);
     @include btn-text;
@@ -481,7 +481,7 @@ button {
     @include btn-text;
 }
 
-// GREYS
+/* GREYS */
 @include withMediaQueries(btn-text-black) {
     --color: var(--black-color);
     @include btn-text;
@@ -503,7 +503,7 @@ button {
     @include btn-text;
 }
 
-// OTHERS
+/* OTHERS */
 @include withMediaQueries(btn-text-info) {
     --color: var(--info-color);
     @include btn-text;

@@ -1,4 +1,4 @@
-import React from 'react'
+import { cN } from '../../utils/classNames'
 
 import './index.scss'
 
@@ -8,7 +8,5 @@ export interface SpinnerProps {
 }
 
 export default function Spinner({ size, color = 'var(--secondary-color)' }: SpinnerProps) {
-    return (
-        <div className={['spinner', size].filter(Boolean).join(' ')} style={{ '--color': color }} />
-    )
+    return <div className={cN(['spinner', size])} style={{ '--color': color }} />
 }

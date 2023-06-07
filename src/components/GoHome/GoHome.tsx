@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 import type { History } from '../../types'
 
 import useGridify, { GridifyProps } from '../../hooks/useGridify'

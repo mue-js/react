@@ -1,4 +1,5 @@
 import React, { FC, ReactNode, useState, useEffect, useRef, CSSProperties } from 'react'
+import { cN } from '../../utils/classNames'
 
 export interface DropdownChildrenProps {
     close: () => void
@@ -107,15 +108,13 @@ export default function Dropdown({
     return (
         <div
             role={role}
-            className={[containerClassName, 'dropdown-container', invisible && 'invisible']
-                .filter(Boolean)
-                .join(' ')}
+            className={cN([containerClassName, 'dropdown-container', invisible && 'invisible'])}
             ref={ref}
             style={style}
         >
             <button
                 type="button"
-                className={['inline-block', className, isOpen && 'open'].filter(Boolean).join(' ')}
+                className={cN(['inline-block', className, isOpen && 'open'])}
                 onClick={handleClick}
             >
                 {typeof trigger === 'function' ? trigger({ isOpen, open, close }) : trigger}
@@ -123,14 +122,12 @@ export default function Dropdown({
 
             {(isOpen || !removeFromDOMWhenClosed) && (
                 <div
-                    className={[
+                    className={cN([
                         'dropdown-content overflow-y-auto border border-dark-15',
                         isOpen && 'displayed',
                         direction && 'to-' + direction,
                         contentClassName,
-                    ]
-                        .filter(Boolean)
-                        .join(' ')}
+                    ])}
                     style={contentStyle}
                 >
                     {typeof children === 'function' ? children({ close }) : children}

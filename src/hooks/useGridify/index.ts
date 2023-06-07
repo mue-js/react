@@ -6,6 +6,8 @@ import type { ResponsiveOrValue } from '../../types'
 // utils
 import { camelToKebab } from '../../utils/stringFormat'
 import { getCSSVarForDimension } from '../../utils/gridify'
+import type { GetCSSVarForDimensionProps } from '../../utils/gridify'
+import { cN } from '../../utils/classNames'
 
 export interface GridifyProps {
     col?: ResponsiveOrValue
@@ -62,19 +64,20 @@ export function useGridify({
     const col = position === 'fixed' ? 0 : defaultCol
     const row = position === 'fixed' ? 0 : defaultRow
 
-    const getCSSVar = useCallback(props => getCSSVarForDimension(props), [])
+    const getCSSVar = useCallback(
+        (props: GetCSSVarForDimensionProps) => getCSSVarForDimension(props),
+        [],
+    )
 
     useEffect(() => {
         setClassName(
-            [
+            cN([
                 camelToKebab(componentName ?? 'GridifiedElement'),
                 currentClassName,
                 justify && `justify-${justify}`,
                 align && `align-${align}`,
                 position,
-            ]
-                .filter(Boolean)
-                .join(' '),
+            ]),
         )
     }, [currentClassName, componentName, justify, align, position])
 
@@ -110,13 +113,13 @@ export function useGridify({
                     dimension: fullWidth ? -1 : width,
                     size,
                     defaultValue: 1,
-                    getPrefix: (w: number) => w >= 0 && 'span ',
+                    getPrefix: (w: string | number) => parseInt(String(w), 10) >= 0 && 'span ',
                 })
                 styles[`--height${suffix}`] = getCSSVar({
                     dimension: fullHeight ? -1 : height,
                     size,
                     defaultValue: 1,
-                    getPrefix: (h: number) => h >= 0 && 'span ',
+                    getPrefix: (h: string | number) => parseInt(String(h), 10) >= 0 && 'span ',
                 })
             })
         }

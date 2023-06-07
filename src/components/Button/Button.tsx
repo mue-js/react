@@ -1,8 +1,9 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import { FC, ButtonHTMLAttributes } from 'react'
 
 // types
 import type { DirectionType, IconSide, WithChildren } from '../../types'
 import { DIRECTIONS } from '../../enum'
+import { cN } from '../../utils/classNames'
 
 // hooks
 import useGridify, { GridifyProps } from '../../hooks/useGridify'
@@ -31,7 +32,7 @@ export interface ButtonProps
     size?: ButtonSize
 }
 
-export default function Button({
+const Button: FC<ButtonProps> = ({
     aspect = 'filled',
     children,
     color = 'primary',
@@ -42,7 +43,7 @@ export default function Button({
     textClassName,
     type = 'button',
     ...rest
-}: ButtonProps) {
+}) => {
     const {
         className,
         style: gridStyle = {},
@@ -54,31 +55,32 @@ export default function Button({
 
     return (
         <button
-            className={[
+            className={cN([
                 className,
                 `btn-${color && aspect !== 'filled' ? `${aspect}-${color}` : color ?? ''}`,
                 icon && `btn-with-icon icon-${iconSide}`,
                 `to-${DIRECTIONS.includes(direction) ? direction : 'bottom'}`,
-            ]
-                .filter(Boolean)
-                .join(' ')}
+            ])}
             style={gridStyle}
             type={type}
             {...props}
         >
             {!children && (
                 <span
-                    className={['flex align-items-center justify-center',
-                        iconSide === 'left' && 'flex-reverse', 
-                        textClassName
-                    ].filter(Boolean).join(' ')}
+                    className={cN([
+                        'flex align-items-center justify-center',
+                        iconSide === 'left' && 'flex-reverse',
+                        textClassName,
+                    ])}
                 >
                     {text}
 
                     {icon && (typeof icon === 'string' ? <Icon icon={icon} /> : icon)}
                 </span>
             )}
-            {children && typeof children === 'function' ? children() : children}
+            {children}
         </button>
     )
 }
+
+export default Button

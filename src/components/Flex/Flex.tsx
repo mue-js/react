@@ -1,5 +1,3 @@
-import React from 'react'
-
 // types
 import { WithChildren } from '../../types'
 
@@ -8,6 +6,7 @@ import useGridify, { GridifyProps } from '../../hooks/useGridify'
 
 // components
 import ErrorBoundary from '../ErrorBoundary'
+import { cN } from '../../utils/classNames'
 
 export interface FlexProps extends WithChildren, GridifyProps {
     column: boolean
@@ -21,13 +20,8 @@ export function UncatchedFlex({ column = false, reverse = false, children, ...re
     })
 
     return (
-        <div
-            className={[className, column && 'flex-column', reverse && 'reverse']
-                .filter(Boolean)
-                .join(' ')}
-            {...props}
-        >
-            {typeof children === 'function' ? children() : children}
+        <div className={cN([className, column && 'flex-column', reverse && 'reverse'])} {...props}>
+            {children}
         </div>
     )
 }

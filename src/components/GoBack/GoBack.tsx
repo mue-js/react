@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 import type { History } from '../../types'
 
 import useGridify, { GridifyProps } from '../../hooks/useGridify'
@@ -9,7 +9,7 @@ import Link from '../Link'
 export interface GoBackProps extends GridifyProps {
     btnClass?: string
     containerClassName?: string
-    to?: string,
+    to?: string
     style?: CSSProperties
     label?: string
     history: History

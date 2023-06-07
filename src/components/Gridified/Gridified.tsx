@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 // types
 import type { WithChildren } from '../../types'
 
@@ -10,6 +10,7 @@ import ErrorBoundary from '../ErrorBoundary'
 
 // sass
 import './index.scss'
+import { cN } from '../../utils/classNames'
 
 export interface GridifiedProps extends WithChildren, GridifyProps {
     fill?: boolean
@@ -30,16 +31,16 @@ export const UncatchedGridified = ({
         componentName,
     } as GridifyProps)
 
-    const classNames = [className, fill && 'fill'].filter(Boolean).join(' ')
+    const classNames = cN([className, fill && 'fill'])
 
     // forced to do this because svg has mismatching height and width
     return Component ? (
         <Component className={classNames} height={height} width={width} {...props}>
-            {typeof children === 'function' ? children() : children}
+            {children}
         </Component>
     ) : (
         <As className={classNames} {...props}>
-            {typeof children === 'function' ? children() : children}
+            {children}
         </As>
     )
 }
